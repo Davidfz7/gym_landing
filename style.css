@@ -1,29 +1,194 @@
-.imgLogo{
-    margin-left:15px;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+
 }
 
+/*Container div*/
+.container-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+/*Nav related--------------*/
+.div-nav {
+    grid-column: 1 / span 2;
+    height: 90px;
+}
+
+.imgLogo {
+    margin-left: 15px;
+}
+
+.nav-elements {
+    display: flex;
+    background-color: rgb(0, 0, 0);
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+}
+
+.the-nav {
+    height: 90px;
+}
+
+/*-------------------------*/
+
+/*Slogan and randy using our machine*/
+
+.two-columns-container {
+
+    grid-column: 1 / span 2;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.text-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-right: 10%;
+    padding-left: 5%;
+    flex: 1;
+}
+
+.machine-someone {
+    flex: 1;
+    align-self: center;
+    margin-right: 10px;
+}
+
+/*----------------------------------*/
+
+/*Products sliders and content-------*/
+
+.products-slider {
+    margin-top: 10px;
+    grid-column: 1/ span 2;
+    height: 30vh;
+    grid-column-gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0;
+}
+
+.products-slider img {
+    height: 291px;
+    width: 291px;
+}
+
+.products-slider div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2%;
+}
+
+.products-slider img {
+    display: none;
+}
+
+.products-slider h4 {
+    color: black;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+}
+/*----------------------------------*/
+
+/*Footer related--------------------*/
+.footer-container{
+    margin-top: 50px;
+    border: solid black;
+    grid-column: 1/span 2;
+}
+
+
+footer {
+    background-color: #000000;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    bottom: 0;
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.footer-top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid white;
+    padding-bottom: 1%;
+}
+.logo-image-foot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+}
+.git-logo-project{
+    flex: 1;
+}
+.develop-by-foot{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+
+}
+.develop-by-foot h3{ 
+    font-weight: 100;
+}
+.logo-image-foot h1{
+    font-weight: 100;
+}
+.footer-top img{
+    margin-right: 1%;
+}
+
+.g-gold{
+    color: #FFD700;
+}
+
+.footer-bottom{
+    display: flex;
+}
+.footer-bottom div{
+    flex: 1;
+}
+.footer-bottom p, h3{
+    font-weight: 100;
+}
+/*----------------------------------*/
 .bebas-neue-regular {
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
     font-style: normal;
-  }
-  
-.navTit{
-    position:absolute;
-    color: white;
-    font-size: 70px;
-    margin-left: 750px;
-    margin-top: 10x;
 }
 
-.navAbout{
-    position:absolute;
+.navTit {
+    color: white;
+    font-size: 50px;
+}
+
+.navAbout {
+    position: absolute;
     margin-left: 1700px;
     font-size: 50px;
     margin-top: 200x;
 }
 
-.textAbout{
+.textAbout {
     color: white;
     text-decoration: none;
+    font-size: 40px;
 }
