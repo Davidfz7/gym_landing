@@ -22,14 +22,17 @@ function nextSlide(images, currentIndex) {
 const phonesImgs = document.querySelectorAll(".phones-div img");
 const giftImgs = document.querySelectorAll(".fashion-div img");
 const fashionImgs = document.querySelectorAll(".gift-card-div img");
+const fashionImgs2 = document.querySelectorAll(".gift-card-div2 img");
 
 let currentIndex1 = 0;
 let currentIndex2 = 0;
 let currentIndex3 = 0;
+let currentIndex4 = 0;
 const interval = 3000;
 
 setInterval(function () {
   currentIndex1 = nextSlide(phonesImgs, currentIndex1);
   currentIndex2 = nextSlide(giftImgs, currentIndex2);
   currentIndex3 = nextSlide(fashionImgs, currentIndex3);
+  currentIndex4 = nextSlide(fashionImgs2, currentIndex4);
 }, interval);
