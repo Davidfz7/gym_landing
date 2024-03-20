@@ -1,4 +1,4 @@
-from gym_products.models import Product, User, UploadedFile
+from gym_products.models import Product, User
 from rest_framework import serializers
 # #First way to serialize data#
 # class ProductsSerializerV1(serializers.Serializer):
@@ -28,7 +28,7 @@ from rest_framework import serializers
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model  = Product
-        fields = ('id', 'pname', 'pdescription', 'pprice', 'pstock')
+        fields = ('id', 'pname', 'pdescription', 'pprice', 'pstock', 'pimgpath')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -36,7 +36,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model  = User
         fields = ('userid', 'uname', 'uphone', 'uemail') 
 
-class FileUploadSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta: 
-        model  = UploadedFile
-        fields = ('file', 'uploaded_on',) 
+# class FileUploadSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta: 
+#         model  = UploadedFile
+#         fields = ('file', 'uploaded_on',) 

@@ -1,0 +1,25 @@
+
+--------------------------------------------------------------------
+Commands to run when mapping an existing table to a model in django
+
+python3 manage.py inspectdb
+{Copy the models that you need into your models.py}
+python3 manage.py makemigrations
+python3 manage.py migrate --fake <appname>
+--------------------------------------------------------------------
+
+
+Admin view: 
+	View, Add, modify and delete products.
+	Image uploads.
+	Export table to excel file or csv, or pdf.
+
+Client view: 
+	Filter products by name, stock and price
+	View Products information
+	
+	
+UserID
+name
+phoneNumber
+email

@@ -7,10 +7,11 @@ use GymDB;
 DROP TABLE IF EXISTS product;
 CREATE TABLE product (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    pname VARCHAR(255) NOT NULL,
+    pname VARCHAR(255) UNIQUE NOT NULL,
     pdescription TEXT,
     pprice DECIMAL(10, 2) NOT NULL,
-    pstock INT NOT NULL
+    pstock INT NOT NULL,
+    pimgpath  VARCHAR(100) UNIQUE
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -20,7 +21,7 @@ CREATE TABLE user (
     uname VARCHAR(255) NOT NULL,
     uphone VARCHAR(20) NOT NULL,
     uemail VARCHAR(255) UNIQUE NOT NULL,
-    udate DATE NOT NULL 
+    udate DATE NOT NULL
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
