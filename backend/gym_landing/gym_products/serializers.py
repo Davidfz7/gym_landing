@@ -25,10 +25,10 @@ from rest_framework import serializers
 #         model  = Products
 #         fields = ['id', 'pname', 'pdescription', 'pprice', 'pstock']
 #Third way to serialize data#
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model  = Product
-        fields = ('id', 'pname', 'pdescription', 'pprice', 'pstock', 'pimgpath')
+# class ProductSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model  = Product
+#         fields = ('id', 'pname', 'pdescription', 'pprice', 'pstock', 'pimgpath')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,3 +40,22 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 #     class Meta: 
 #         model  = UploadedFile
 #         fields = ('file', 'uploaded_on',) 
+
+
+class ProductSerializer(serializers.Serializer):
+   
+    pname        = serializers.CharField(max_length = 255)
+    pdescription = serializers.CharField()
+    pprice       = serializers.DecimalField(max_digits=10, decimal_places= 2)
+    pstock       = serializers.IntegerField()
+    pimgpath     = serializers.FileField()
+    #With this method we de-serialize(kind of parsing) the data into a Product object(or Model)
+    def create(self, validated_data):
+        return Product(**validated_data) 
+    #With this method method we can modify (PATCH) an 
+    #existing entry, we pass the entry and the new PATCH
+    def update(self, instance, validate_data):
+        instance.pname = validate_data.get('pname', instance.pname)
+        instance.save()
+        return instance 
+

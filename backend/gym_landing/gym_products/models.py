@@ -1,5 +1,5 @@
-from django.db import models
 import os
+from django.db import models
 from gym_landing.settings import MEDIA_ROOT
 # Create your models here.
 class Product(models.Model):
@@ -8,34 +8,15 @@ class Product(models.Model):
     pdescription = models.TextField(blank=True, null=True)
     pprice       = models.DecimalField(max_digits=10, decimal_places=2)
     pstock       = models.IntegerField()
-   
+    pimgpath     = models.FileField(upload_to = 'uploads/', null = True)
+        
     class Meta:
         db_table = 'product'
     
     def __str__(self):
-        return self.pname
-   
-    def imgs_path(self, filename):
-        counter      = Product.objects.count()
-        path         = os.path.join(MEDIA_ROOT, f'uploads/2') 
-        filesCounter = 0
-        pname        = self.pname  
-        ppk          = counter + 1
-        keyValue     = {
-            'pname': pname, 
-            'ppk'  : ppk
-        }
-        # if os.path.exists(path):
-        #     for pathv2 in os.listdir(path):
-        #        if os.path.isfile(os.path.join(path, path)):
-        #            filesCounter += 1
-
-        print(keyValue)
-
-        return f'uploads/{counter+1}/{pname}'
-
-    pimgpath     = models.FileField(upload_to = imgs_path, null = True)
-      
+        return str({"pid": self.id, "pname": self.pname,
+                     "pdescription": self.pdescription,
+                     "pprice": self.pprice, "pstock": self.pstock})      
          
         
 class User(models.Model):
