@@ -9,15 +9,16 @@ CREATE TABLE product (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pname VARCHAR(255) UNIQUE NOT NULL,
     pdescription TEXT,
+    pstatus ENUM('available', 'out of stock', 'coming soon') NOT NULL,
     pprice DECIMAL(10, 2) NOT NULL,
     pstock INT NOT NULL,
-    pimgpath  VARCHAR(100) UNIQUE
+    pimgspath  VARCHAR(100) UNIQUE
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
-    userid INT PRIMARY KEY AUTO_INCREMENT  ,
+    userid INT PRIMARY KEY AUTO_INCREMENT,
     uname VARCHAR(255) NOT NULL,
     uphone VARCHAR(20) NOT NULL,
     uemail VARCHAR(255) UNIQUE NOT NULL,

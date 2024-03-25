@@ -23,3 +23,9 @@ UserID
 name
 phoneNumber
 email
+
+
+Current problem -> I want to use the PATCH request but to modify a 
+entry only use its name
+
+Solution -> 
