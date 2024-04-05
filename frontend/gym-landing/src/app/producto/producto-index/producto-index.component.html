@@ -1,0 +1,205 @@
+<div class="container">
+    <div class="sidebar child">
+        <mat-form-field class="example-form-field" style="margin-top: 16px;">
+            <mat-label>Buscar Productos</mat-label>
+            <input matInput type="text" [(ngModel)]="value">
+            @if (value) {
+              <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <br>
+
+          <mat-card>
+            <mat-card-content>
+              <h2 class="example-h2">Rango de Precios</h2>
+              <div class="example-label-container">
+                <label id="example-name-label" class="example-name-label">Minimo:</label>
+                <label class="example-value-label">{{slider.value}}</label>
+                <label id="example-name-label" class="example-name-label">Maximo:</label>
+                <label class="example-value-label">{{slider2.value}}</label>
+              </div>
+              <mat-slider min="0" max="5000000" [step]="step" [discrete]="thumbLabel">  
+                <input [(ngModel)]="min" #slider matSliderStartThumb>
+                <input [(ngModel)]="max" #slider2 matSliderEndThumb>
+              </mat-slider>
+            </mat-card-content>
+          </mat-card>
+          <br>
+          <mat-divider></mat-divider>
+          <br>
+          <mat-card>
+            <mat-card-content>
+                <h2 class="example-h2">Tipos</h2>
+                <p><mat-checkbox >Opcion 1 </mat-checkbox></p>
+                <p><mat-checkbox >Opcion 2</mat-checkbox></p>
+                <p><mat-checkbox >Opcion 3</mat-checkbox></p>
+            </mat-card-content>
+          </mat-card>
+          <br>
+          <mat-divider></mat-divider>
+          <br>
+          <mat-card>
+            <mat-card-content>
+                <h2 class="example-h2">Marcas</h2>
+                <p><mat-checkbox >Opcion 1 </mat-checkbox></p>
+                <p><mat-checkbox >Opcion 2</mat-checkbox></p>
+                <p><mat-checkbox >Opcion 3</mat-checkbox></p>
+            </mat-card-content>
+          </mat-card>
+
+          
+
+    </div>
+    <div class="main child">
+        <mat-grid-list [cols]="3" rowHeight="630px" gutterSize="1px">
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Smith Machine</mat-card-title>
+                        <mat-card-subtitle>Equipamento</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/image.png" alt="Smith Machine">
+                    <mat-card-content>
+                        <p>
+                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                        bred for hunting.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Ver Mas</button>
+                        <button mat-button>Consultar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Smith Machine</mat-card-title>
+                        <mat-card-subtitle>Equipamento</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/image.png" alt="Smith Machine">
+                    <mat-card-content>
+                        <p>
+                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                        bred for hunting.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Ver Mas</button>
+                        <button mat-button>Consultar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Smith Machine</mat-card-title>
+                        <mat-card-subtitle>Equipamento</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/image.png" alt="Smith Machine">
+                    <mat-card-content>
+                        <p>
+                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                        bred for hunting.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Ver Mas</button>
+                        <button mat-button>Consultar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Smith Machine</mat-card-title>
+                        <mat-card-subtitle>Equipamento</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/image.png" alt="Smith Machine">
+                    <mat-card-content>
+                        <p>
+                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                        bred for hunting.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Ver Mas</button>
+                        <button mat-button>Consultar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Smith Machine</mat-card-title>
+                        <mat-card-subtitle>Equipamento</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/image.png" alt="Smith Machine">
+                    <mat-card-content>
+                        <p>
+                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                        bred for hunting.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Ver Mas</button>
+                        <button mat-button>Consultar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Smith Machine</mat-card-title>
+                        <mat-card-subtitle>Equipamento</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/image.png" alt="Smith Machine">
+                    <mat-card-content>
+                        <p>
+                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                        bred for hunting.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Ver Mas</button>
+                        <button mat-button>Consultar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Smith Machine</mat-card-title>
+                        <mat-card-subtitle>Equipamento</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/image.png" alt="Smith Machine">
+                    <mat-card-content>
+                        <p>
+                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                        bred for hunting.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Ver Mas</button>
+                        <button mat-button>Consultar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+                
+        
+        </mat-grid-list>
+    </div>
+</div>
+
+
+  
