@@ -1,7 +1,53 @@
 <mat-toolbar class="mainToolbar">
     <img class="imgLogo" src="assets/logo.png" alt="logo">
-    <span>GStrength</span>
+    <span class="titulo">&nbsp; GStrength</span>
     <span class="example-spacer"></span>
+    <div class="menuNav">
+        <button mat-button [matMenuTriggerFor]="navMenu">Productos</button>
+        <mat-menu #navMenu="matMenu">
+            <button mat-menu-item [routerLink]="'/avisos'">
+                <mat-icon>room_preferences</mat-icon>
+                <span>Maquinas</span>
+            </button>
+            <button mat-menu-item [routerLink]="'/encuestas'">
+                <mat-icon>fitness_center</mat-icon>
+                <span>Pesas</span>
+            </button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="navMenu">Descuentos</button>
+        <mat-menu #navMenu="matMenu">
+            <button mat-menu-item [routerLink]="'/avisos'">
+                <mat-icon>feed</mat-icon>
+                <span>Avisos</span>
+            </button>
+            <button mat-menu-item [routerLink]="'/encuestas'">
+                <mat-icon>quiz</mat-icon>
+                <span>Encuestas</span>
+            </button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="navMenu">Nuevos Ingresos</button>
+        <mat-menu #navMenu="matMenu">
+            <button mat-menu-item [routerLink]="'/avisos'">
+                <mat-icon>feed</mat-icon>
+                <span>Avisos</span>
+            </button>
+            <button mat-menu-item [routerLink]="'/encuestas'">
+                <mat-icon>quiz</mat-icon>
+                <span>Encuestas</span>
+            </button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="navMenu">Destacados</button>
+        <mat-menu #navMenu="matMenu">
+            <button mat-menu-item [routerLink]="'/avisos'">
+                <mat-icon>feed</mat-icon>
+                <span>Avisos</span>
+            </button>
+            <button mat-menu-item [routerLink]="'/encuestas'">
+                <mat-icon>quiz</mat-icon>
+                <span>Encuestas</span>
+            </button>
+        </mat-menu>
+    </div>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>info</mat-icon>
     </button>

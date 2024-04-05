@@ -1,11 +1,8 @@
 .example-card {
     max-width: 400px;
+    // box-shadow: 3px 3px white ;
 }
   
-.example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-}
 
 .container{
     display: flex;
@@ -64,8 +61,66 @@
     justify-content: space-between;
     margin: 20px 10px 0;
     max-width: 284px;
+    color: whtie;
   }
   
   .example-result-card .example-value-label {
     font-weight: 600;
   }
+
+  .example-name-label{
+    color: white;
+  }
+
+  .example-value-label{
+    color: white;
+  }
+
+  .mat-mdc-card-title{
+    color: white;
+  }
+
+  .mat-card-image{
+    max-width:150px ;
+    max-height: 150px;
+  }
+
+  .imgContainer{
+    width: 1400px;
+    height: 300px; /* Set the desired height */
+    overflow: hidden; /* Hide the overflow */
+    padding-left: 43px;
+    // padding-right: 43px;
+    padding-top: 16px;
+  }
+
+  .imgGym {
+    width: 1480px; /* Set the width to fill the container */
+    height: auto; /* Allow the height to adjust proportionally */
+  }
+
+  h4{
+    color: white;
+    padding: 6px;
+  }
+
+  .navSubC{
+    width: 1400px;
+    padding-left: 43px;
+    // padding-right: 43px;
+    padding-top: 16px;
+    display: flex;
+}
+
+.nsS{
+    flex: 1;
+    margin: 10px;
+    
+}
+
+.nsS:first-child {
+    margin-right: 900px;
+    // max-width: 1300px;
+}
+ 
+  

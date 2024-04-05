@@ -9,6 +9,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatMenuModule} from '@angular/material/menu';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-producto-index',
@@ -16,6 +18,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   imports: [MatGridListModule, MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule,MatDividerModule,
     MatCheckboxModule,
     MatSliderModule,
+    MatMenuModule,
+    RouterLink,
   ],
   templateUrl: './producto-index.component.html',
   styleUrl: './producto-index.component.scss'
