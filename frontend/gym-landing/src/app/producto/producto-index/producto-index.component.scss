@@ -86,16 +86,16 @@
   }
 
   .imgContainer{
-    width: 1400px;
+    width: 1842px;
     height: 300px; /* Set the desired height */
     overflow: hidden; /* Hide the overflow */
-    padding-left: 43px;
+    padding-left: 10px;
     // padding-right: 43px;
     padding-top: 16px;
   }
 
   .imgGym {
-    width: 1480px; /* Set the width to fill the container */
+    width: 1759px; /* Set the width to fill the container */
     height: auto; /* Allow the height to adjust proportionally */
   }
 
@@ -105,8 +105,8 @@
   }
 
   .navSubC{
-    width: 1400px;
-    padding-left: 43px;
+    width: 1759px;
+    // padding-left: 43px;
     // padding-right: 43px;
     padding-top: 16px;
     display: flex;
@@ -119,8 +119,37 @@
 }
 
 .nsS:first-child {
-    margin-right: 900px;
+    margin-right: 870px;
     // max-width: 1300px;
+    padding-left: 400px;
 }
  
+.cartasFiltro{
+  background-color: transparent;
+}
+
+.cartasProd{
+  background-color: rgb(29, 29, 29);
+  border-radius: 3px;
+}
+
+.cartasProd img{
+  max-height: 300px;
+}
+
+.btnVer{
+  margin-right: 83px;
+}
+
+.btnConsultar{
+  padding-left: 10px;
+}
+
+.buscar{
+  padding-top: 0;
+}
+
+.all{
+  padding: 50px;
+}
   
