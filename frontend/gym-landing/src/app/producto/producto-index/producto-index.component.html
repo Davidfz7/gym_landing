@@ -25,7 +25,8 @@
     
     <div class="container">
         <div class="sidebar child">
-            <mat-form-field class="example-form-field buscar" style="margin-top: 16px;">
+            <mat-form-field class="example-form-field buscar" appearance="outline" style="margin-top: 16px;"> 
+                <!-- Quitar el appearance="outline"  -->
                 <mat-label>Buscar Productos</mat-label>
                 <input matInput type="text" [(ngModel)]="value">
                 @if (value) {
