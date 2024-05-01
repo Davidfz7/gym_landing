@@ -9,6 +9,12 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 
+import { Subject, takeUntil } from 'rxjs';
+import { GenericService } from '../../share/generic.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
+
 export interface UserData {
   id: string;
   name: string;
@@ -65,11 +71,20 @@ export class AdminIndexComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  datos:any;
+  destroy$:Subject<boolean>=new Subject<boolean>();
+
+  constructor(private gService:GenericService,
+    private router:Router,
+    private route:ActivatedRoute,
+    private httpClient:HttpClient,
+    private sanitizer: DomSanitizer) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
+
+    this.listaProductos();
   }
  
 
@@ -80,6 +95,15 @@ export class AdminIndexComponent implements AfterViewInit {
 
   ngAfterContentInit(){
     
+  }
+
+  listaProductos(){
+    this.gService.list('products/get-all-products/')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data:any)=>{
+        this.datos=data;
+        console.log(this.datos);
+      });
   }
   
 
