@@ -4,3 +4,6 @@ backend/venv
 venv
 backend\gym_landing\gym_landing\__pycache__
 backend\gym_landing\gym_products\__pycache__
+
+backend/gym_landing/gym_landing/__pycache__
+backend/gym_landing/gym_products/__pycache__

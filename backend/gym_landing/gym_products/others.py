@@ -72,8 +72,9 @@ def filter_products(params: dict):
    
     # if not valid_json_stucture(params ,params.get("values")):
     #     return Response("Not a valid json", status = status.HTTP_400_BAD_REQUEST)
-    is_valid = valid_json_stucture(params)
-    print(is_valid)
+    is_valid = validate_json_stucture(params)
+    if not is_valid:
+        return Response("Not a valid json stucture")
     return Response("Testing till here") 
     fields         = params.get("filter_by")
     values         = params.get("values")
@@ -115,7 +116,7 @@ def descen_or_ascen(ascendant: bool, descendant: bool,field: str, values: dict) 
         serializer         = ProductSerializer(descendant_objects, many = True)
         return Response(serializer.data, status = status.HTTP_200_OK) 
 
-def valid_json_stucture(filter_json: dict) -> bool:
+def validate_json_stucture(filter_json: dict) -> bool:
     schema = {
         "type": "object",
         "properties": {
@@ -133,17 +134,15 @@ def valid_json_stucture(filter_json: dict) -> bool:
                     "type": "array",
                     "items": {
                         "type": "number",
-                        "minItems": 2,
-                        "maxItems": 2
-                    }
+                    },
+                    "maxItems": 2
                 },
                 "pstock_values": {
                     "type": "array",
                     "items": {
-                        "type": "number",
-                        "minItems": 2,
-                        "maxItems": 2
-                    }
+                        "type": "number", 
+                    },
+                    "maxItems": 2 
                 },
                 "pstatus_values": {
                     "type": "array",
@@ -153,22 +152,19 @@ def valid_json_stucture(filter_json: dict) -> bool:
                     }
                 }
             },
-            # "required": [
-            #     "pprice_values",
-            #     "pstock_values",
-            #     "pstatus_values"
-            #     ]
         },
         "sort_reference": {
-        "type": "string"
+            "type": "string",
+            "enum": ["pprice", "pstatus", "pstock"]
         },
         "sort_elements_ascendant": {
-        "type": "boolean"
+            "type": "boolean"
         },
         "sort_elements_descendant": {
-        "type": "boolean"
+            "type": "boolean"
         }
     },
+    "required":["filter_by"]
     }
     try: 
         validate(instance=filter_json, schema= schema)
@@ -177,6 +173,7 @@ def valid_json_stucture(filter_json: dict) -> bool:
        return False
 
     return True 
+
 def add_new_product(request): 
         serialize_product = ProductSerializer(data = request.data)       
         if serialize_product.is_valid():
