@@ -1,3 +1,4 @@
+import jsonschema.exceptions
 from gym_landing.settings       import MEDIA_ROOT
 from .models                    import Product
 from .serializers               import ProductSerializer 
@@ -5,6 +6,9 @@ from rest_framework.response    import Response
 from rest_framework             import status 
 from itertools                  import zip_longest
 import os
+from jsonschema import validate
+import jsonschema
+
 
 #For Post requests
 #--------------------------------------------------
@@ -48,10 +52,6 @@ def get_all_products():
     return serializer.data
 
 def filter_products(params: dict):
-    # params = {
-    #     "filter_by": ["pprice"],
-    #     "values": [22.0]
-    # }
     # {
     #     "filter_by": [], -> add columns that you wish to filter by
     #     "values": {
@@ -68,8 +68,12 @@ def filter_products(params: dict):
     #     "sort_elements_descendant": value, -> bool value
     # }
 
-    if not valid_json_stucture(params ,params.get("values")):
-        return Response("Not a valid json", status = status.HTTP_400_BAD_REQUEST)
+
+   
+    # if not valid_json_stucture(params ,params.get("values")):
+    #     return Response("Not a valid json", status = status.HTTP_400_BAD_REQUEST)
+    is_valid = valid_json_stucture(params)
+    print(is_valid)
     return Response("Testing till here") 
     fields         = params.get("filter_by")
     values         = params.get("values")
@@ -111,35 +115,83 @@ def descen_or_ascen(ascendant: bool, descendant: bool,field: str, values: dict) 
         serializer         = ProductSerializer(descendant_objects, many = True)
         return Response(serializer.data, status = status.HTTP_200_OK) 
 
-def valid_json_stucture(outer_dict: dict, inner_dict: dict) -> bool:
+def valid_json_stucture(filter_json: dict) -> bool:
     schema = {
         "type": "object",
-        "properties":{
-            "filter_by": {"type": "list"},
-            "values":    {"type": "dict"},
-            "sort_reference": {"type": "string"},
-            "sort_elements_ascendant": {"type": "bool"},
-            "sort_elements_descendant": {"type": "bool"}
+        "properties": {
+            "filter_by": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": ["pstatus", "pprice", "pstock"]
+            }
         },
-        "required": ["filter_by"]
+        "values": {
+            "type": "object",
+            "properties": {
+                "pprice_values": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "minItems": 2,
+                        "maxItems": 2
+                    }
+                },
+                "pstock_values": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "minItems": 2,
+                        "maxItems": 2
+                    }
+                },
+                "pstatus_values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": ["available", "out of stock", "coming soon"]
+                    }
+                }
+            },
+            # "required": [
+            #     "pprice_values",
+            #     "pstock_values",
+            #     "pstatus_values"
+            #     ]
+        },
+        "sort_reference": {
+        "type": "string"
+        },
+        "sort_elements_ascendant": {
+        "type": "boolean"
+        },
+        "sort_elements_descendant": {
+        "type": "boolean"
+        }
+    },
     }
-    outer_filter_keys   = ["filter_by", "values",
-                      "sort_reference", "sort_elements_ascendant",
-                      "sort_elements_descendant"]
-    inner_filter_keys   = ["pprice_values", "pstock_values",
-                           "pstatus_values"]
-
-    outer_dict_keys  = list(outer_dict.keys())
-    inner_dict_keys = list(inner_dict.keys())
-
-    for outer_key, inner_key in zip_longest(outer_dict_keys, inner_dict_keys):
-        if outer_key not in outer_filter_keys:
-            return False
-        if inner_key == None:
-            continue
-        if inner_key not in inner_filter_keys:
-            return False
-    
+    try: 
+        validate(instance=filter_json, schema= schema)
+    except jsonschema.exceptions.ValidationError as err:
+       print(err)
+       return False
 
     return True 
+def add_new_product(request): 
+        serialize_product = ProductSerializer(data = request.data)       
+        if serialize_product.is_valid():
+            product_model  = serialize_product.create(serialize_product.validated_data)
+            product_exists = Product.objects.filter(pname = product_model.pname).exists()
+       
+            if product_exists:
+                return Response("Existing entry using the same product name!", status = status.HTTP_400_BAD_REQUEST) 
+            product_model.pimgspath = handle_uploaded_file(
+                                    request.FILES.getlist("pimgspath"))  
+            product_model.save()
+            return Response(serialize_product.data,
+                             status = status.HTTP_200_OK) 
+
+        return Response(serialize_product.errors,
+                         status = status.HTTP_400_BAD_REQUEST)
+    
 

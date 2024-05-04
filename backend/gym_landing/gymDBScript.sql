@@ -27,17 +27,14 @@ CREATE TABLE user (
 DEFAULT CHARACTER SET = utf8mb4;
 
 
-INSERT INTO product (pname, pdescription, pprice, pstock) VALUES
-    ('Treadmill', 'Powerful motorized treadmill for home use', 999.99, 20),
-    ('Adjustable Dumbbells', 'Set of adjustable dumbbells (20 kg)', 149.99, 30),
-    ('Stationary Bike', 'Stationary bike with LCD monitor', 299.99, 15),
-    ('Rowing Machine', 'Cardiovascular rowing machine for full-body workout', 449.99, 10),
-    ('Weight Bench', 'Weight bench with barbell support', 129.99, 25);
+INSERT INTO product (pname, pdescription, pstatus, pprice, pstock) VALUES
+    ('Treadmill', 'Powerful motorized treadmill for home use', 'available', 999.99, 20);
 
-INSERT INTO user (uname, uphone, uemail, udate) VALUES 
-    ('John Doe', '123-456-7890', 'john@example.com', '2022-03-21'),
-    ('Alice Smith', '987-654-3210', 'alice@example.com', '2022-03-21'),
-    ('Bob Johnson', '555-123-4567', 'bob@example.com', '2022-03-21'),
-    ('Emily Davis', '444-555-6666', 'emily@example.com', '2022-03-21'),
-    ('Michael Brown', '999-888-7777', 'michael@example.com', '2022-03-21');
+
+-- INSERT INTO user (uname, uphone, uemail, udate) VALUES 
+--     ('John Doe', '123-456-7890', 'john@example.com', '2022-03-21'),
+--     ('Alice Smith', '987-654-3210', 'alice@example.com', '2022-03-21'),
+--     ('Bob Johnson', '555-123-4567', 'bob@example.com', '2022-03-21'),
+--     ('Emily Davis', '444-555-6666', 'emily@example.com', '2022-03-21'),
+--     ('Michael Brown', '999-888-7777', 'michael@example.com', '2022-03-21');
  
