@@ -54,3 +54,45 @@ h4{
   color: white;
   font-size: larger;
 }
+
+.formAgregar{
+  padding: 5px;
+  max-width: 60%;
+  margin: 0 auto;
+  margin-bottom: 50px ;
+}
+
+mat-hint{
+  color: white;
+}
+
+.inputsForm{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.divForm{
+  display: flex;
+  flex-wrap: wrap; 
+}
+
+.rowsForm{
+  margin-right: 10px;
+  text-align: center;
+}
+
+.rowsForm:nth-child(1n) {
+  margin-right: 0;
+  width: calc(70% - 10px); /* Adjust based on the number of columns and gaps */
+}
+.rowsForm:nth-child(2n) {
+  margin-right: 0;
+  width: calc(30% - 10px); /* Adjust based on the number of columns and gaps */
+}
+
+.imagen{
+  border: 2px solid #d3aa0a;
+  height: 300px;
+  width: 300px;
+  margin: 0 auto;
+}

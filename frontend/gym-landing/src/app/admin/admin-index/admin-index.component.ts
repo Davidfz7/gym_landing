@@ -8,6 +8,8 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 import Chart from 'chart.js/auto';
@@ -46,7 +48,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'app-admin-index',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatRippleModule, MatTabsModule, MatGridListModule, MatCardModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,MatButtonModule,MatSelectModule
   ],
   templateUrl: './admin-index.component.html',
   styleUrl: './admin-index.component.scss'
@@ -79,7 +81,9 @@ export class AdminIndexComponent implements AfterViewInit {
     private router:Router,
     private route:ActivatedRoute,
     private httpClient:HttpClient,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private formBuilder: FormBuilder
+  ) {
 
     
     
@@ -87,8 +91,16 @@ export class AdminIndexComponent implements AfterViewInit {
     this.listaProductos();
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
     this.createChart();
+    this.myForm = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      estado: ['', Validators.required],
+      precio:['', Validators.required],
+      inventario:['', Validators.required],
+    }, { validators: this.customValidator });
+
   }
 
  
@@ -112,6 +124,22 @@ export class AdminIndexComponent implements AfterViewInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+  }
+
+  onSubmit() {
+    if (this.myForm.valid) {
+      console.log(this.myForm.value);
+      // Perform form submission logic here
+    }
+  }
+
+  customValidator(formGroup: FormGroup) {
+    const estadoControl = formGroup.get('estado');
+    if (!estadoControl.value) {
+      estadoControl.setErrors({ 'required': true });
+    } else {
+      estadoControl.setErrors(null);
+    }
   }
 
   createChart(){
@@ -165,9 +193,6 @@ export class AdminIndexComponent implements AfterViewInit {
     
   }
 
-  
-
-  
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -41,7 +41,7 @@
       <div class="tabla">
         <mat-form-field>
             <mat-label>Buscar</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mancuerda" #input>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mancuerna" #input>
          </mat-form-field>
           
           <!-- <div class="mat-elevation-z8">
@@ -126,7 +126,59 @@
     </div> 
     </mat-tab>
     <mat-tab label="Agregar Productos">
+      <div class="formAgregar">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="divForm">
+          <div class="rowsForm">
+            <mat-form-field appearance="outline" class="inputsForm">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombre" placeholder="Mancuerna">
+              <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+              <mat-hint>Nombre del producto</mat-hint>
+            </mat-form-field>
+          
+            <mat-form-field appearance="outline" class="inputsForm">
+              <mat-label>Descripcion</mat-label>
+              <input matInput formControlName="descripcion" placeholder="Este producto es un producto creado para realizar ejercicios...">
+              <mat-hint>Descripcion del Producto, Maximo 255 Caracteres</mat-hint>
+            </mat-form-field>
+          
+            <mat-form-field appearance="outline" class="inputsForm">
+              <mat-label>Estado</mat-label>
+              <mat-select placeholder="Disponible">
+                <mat-option value="1">Disponible</mat-option>
+                <mat-option value="2">Coming Soon</mat-option>
+                <mat-option value="3">Tiempo Limitado</mat-option>
+              </mat-select>
+              <mat-hint>Estado de Disponibilidad Actual</mat-hint>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline" class="inputsForm">
+              <mat-label>Precio</mat-label>
+              <input matInput formControlName="precio" placeholder="100000">
+              <mat-hint>Precio en Colones del Producto, sin puntos o comas</mat-hint>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline" class="inputsForm">
+              <mat-label>Inventario</mat-label>
+              <input matInput formControlName="inventario" placeholder="35">
+              <mat-hint>La Cantidad Disponible del Producto para Entrega Inmediata</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="rowsForm">
+            <h4 style="font-weight: 400;">Imagen Del Producto</h4>
+            <div class="imagen">
+              Preview
+            </div>
+            <button mat-flat-button color="primary" style="margin-top: 5px;">Subir Imagen</button>
+          </div>
 
+          <button mat-flat-button color="primary" type="submit" [disabled]="!myForm.valid">Agregar Producto</button>
+        </form>
+      </div>
+
+      
+      
+      
     </mat-tab>
     <mat-tab label="Registrar Venta">
 
