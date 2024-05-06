@@ -29,3 +29,28 @@ table {
     width: 100%;
     margin: 5px;
   }
+
+  .divGraphs{
+    display: flex;
+    flex-wrap: wrap; 
+  }
+
+  .rows{
+    width: calc(33.33% - 10px); /* Adjust based on the number of columns and gaps */
+    margin-right: 10px;
+    text-align: center;
+  }
+
+  .rows:nth-child(3n) {
+    margin-right: 0;
+}
+
+h4{
+  color: white;
+  font-weight: 500;
+}
+
+.textoFiltro{
+  color: white;
+  font-size: larger;
+}
