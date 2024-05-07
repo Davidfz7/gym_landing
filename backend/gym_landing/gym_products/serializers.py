@@ -61,3 +61,9 @@ class ProductSerializer(serializers.Serializer):
         instance.save()
         return instance 
 
+class SalesSerializer(serializers.Serializer):
+    productid = serializers.PrimaryKeyRelatedField(queryset = Product.objects.all())
+    quantity  = serializers.IntegerField()
+    date      = serializers.DateField()
+    def create(self, validated_data):
+        return Product(**validated_data)

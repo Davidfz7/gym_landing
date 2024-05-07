@@ -1,7 +1,7 @@
 import jsonschema.exceptions
 from gym_landing.settings       import MEDIA_ROOT
-from .models                    import Product
-from .serializers               import ProductSerializer 
+from .models                    import Product, Sales
+from .serializers               import ProductSerializer, SalesSerializer 
 from rest_framework.response    import Response 
 from rest_framework             import status 
 from itertools                  import zip_longest
@@ -9,7 +9,25 @@ import os
 from jsonschema import validate
 import jsonschema
 
-
+SALES_SCHEMA = {
+  "type": "object",
+  "properties": {
+    "productid": {
+      "type": "integer"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "date": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "productid",
+    "quantity",
+    "date"
+  ]
+} 
 #For Post requests
 #--------------------------------------------------
 def handle_file_directories() -> list:
@@ -164,7 +182,13 @@ def validate_json_stucture(filter_json: dict) -> bool:
             "type": "boolean"
         }
     },
-    "required":["filter_by"]
+    "required":["filter_by"],
+    "not":{
+        "allOf":[
+            {"properties": {"sort_elements_ascendant": {"const": True } } },
+            {"properties": {"sort_elements_descendant":  {"const": True } } }
+            ]
+        }
     }
     try: 
         validate(instance=filter_json, schema= schema)
@@ -192,3 +216,34 @@ def add_new_product(request):
                          status = status.HTTP_400_BAD_REQUEST)
     
 
+def get_all_sales():
+    query      = Sales.objects.all()
+    serializer = SalesSerializer(query, many = True)
+    return serializer.data
+
+
+def add_new_sale(request):
+    print(type(request.data))
+    if not isinstance(request.data, dict):
+        return Response(f"Need a json structure {SALES_SCHEMA}", status = status.HTTP_400_BAD_REQUEST)
+    data = dict(request.data)
+    if not validate_sale_post(data):
+        return Response(f"Not a valid json: {SALES_SCHEMA}", 
+                        status = status.HTTP_400_BAD_REQUEST)
+    try:
+        product   = Product.objects.get(pk = data.get("productid"))
+        new_sale  = Sales(productid = product, quantity = data.get("quantity"), 
+                          date = data.get("date")) 
+        new_sale.save()
+        serialize = SalesSerializer(new_sale)
+        return Response(serialize.data, status = status.HTTP_200_OK)
+    except Product.DoesNotExist as err:
+        return Response(str(err), status = status.HTTP_400_BAD_REQUEST)
+
+def validate_sale_post(data: dict):
+    try:
+        validate(instance = data, schema = SALES_SCHEMA)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
+   

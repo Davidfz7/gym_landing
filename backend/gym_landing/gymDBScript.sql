@@ -26,11 +26,22 @@ CREATE TABLE user (
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
+DROP TABLE IF EXISTS sales;
+CREATE TABLE sales (
+    saleid INT PRIMARY KEY AUTO_INCREMENT, 
+    productid INT NOT NULL, 
+    quantity INT NOT NULL, 
+    date DATE NOT NULL, 
+    FOREIGN KEY (productid) REFERENCES product(id)
+)ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
 
 INSERT INTO product (pname, pdescription, pstatus, pprice, pstock) VALUES
     ('Treadmill', 'Powerful motorized treadmill for home use', 'available', 999.99, 20);
 
-
+INSERT INTO sales (productid, quantity, date) VALUES
+    (1, 5, '2024-05-07');
 -- INSERT INTO user (uname, uphone, uemail, udate) VALUES 
 --     ('John Doe', '123-456-7890', 'john@example.com', '2022-03-21'),
 --     ('Alice Smith', '987-654-3210', 'alice@example.com', '2022-03-21'),

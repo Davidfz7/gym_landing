@@ -8,15 +8,13 @@ from rest_framework.parsers     import FormParser, MultiPartParser, JSONParser
 #----------------------------------------------
 from .models      import Product, User
 from .serializers import ProductSerializer, UserSerializer
-from .others      import  get_all_products, filter_products, add_new_product
+from .others      import  (get_all_products,filter_products, 
+                           add_new_product, get_all_sales, add_new_sale)
 #----------------------------------------------
 
        
 class ProductView(APIView):
-    """
-        Whole path that we are going to be using:
-        products/{function name}
-    """
+  
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
     serializer_class = ProductSerializer
     
@@ -36,7 +34,7 @@ class ProductView(APIView):
 
     def get(self, request):
         path = request.path
-      
+
         if "/get-all-products/" == path:
             all_products = get_all_products()
             return Response(all_products, status = status.HTTP_200_OK)
@@ -48,6 +46,15 @@ class ProductView(APIView):
     def delete(self, request, pk): 
         return Response("Not done yet", status = status.HTTP_200_OK)
 
-
+class SaleView(APIView):
+    def get(self, request):
+        path = request.path
+        if "/get-all-sales/" == path:
+            print("si entro aqui")
+            all_sales = get_all_sales()
+            return Response(all_sales, status = status.HTTP_200_OK)
     
-
+    def post(self, request):
+        path = request.path
+        if "/add-new-sale/" == path: 
+            return add_new_sale(request)

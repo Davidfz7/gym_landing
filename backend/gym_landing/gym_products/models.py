@@ -34,6 +34,17 @@ class User(models.Model):
     class Meta:
         db_table = 'user'
 
+
+class Sales(models.Model):
+    saleid = models.AutoField(primary_key=True)
+    productid = models.ForeignKey(Product, models.DO_NOTHING, db_column='productid')
+    quantity = models.IntegerField()
+    date = models.DateField()
+
+    class Meta:
+        managed = False
+        db_table = 'sales'
+
 # class UploadedFile(models.Model):
 #     file = models.FileField(upload_to= 'uploads/')
 #     uploaded_on = models.DateField(auto_now = True)
