@@ -11,6 +11,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import Chart from 'chart.js/auto';
 
@@ -48,7 +49,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'app-admin-index',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatRippleModule, MatTabsModule, MatGridListModule, MatCardModule,
-    ReactiveFormsModule,MatButtonModule,MatSelectModule
+    ReactiveFormsModule,MatButtonModule,MatSelectModule, HttpClientModule,CommonModule,
   ],
   templateUrl: './admin-index.component.html',
   styleUrl: './admin-index.component.scss'
@@ -76,6 +77,11 @@ export class AdminIndexComponent implements AfterViewInit {
 
   myForm: FormGroup;
 
+  imageUrl: any;
+  logo:any;
+  multipleImages:any;
+  imagesArray:any;
+
 
   constructor(private gService:GenericService,
     private router:Router,
@@ -94,13 +100,12 @@ export class AdminIndexComponent implements AfterViewInit {
   ngOnInit(){
     this.createChart();
     this.myForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      estado: ['', Validators.required],
-      precio:['', Validators.required],
-      inventario:['', Validators.required],
-    }, { validators: this.customValidator });
-
+      pname: ['', Validators.required],
+      pdescription: ['', Validators.required],
+      pstatus: ['', Validators.required],
+      pprice:['', Validators.required],
+      pstock:['', Validators.required],
+    });
   }
 
  
@@ -128,19 +133,67 @@ export class AdminIndexComponent implements AfterViewInit {
 
   onSubmit() {
     if (this.myForm.valid) {
-      console.log(this.myForm.value);
-      // Perform form submission logic here
+      // this.myForm.value.pimgspath=this.logo;
+      const formData = new FormData();
+      // const formData = this.myForm.value;
+      formData.append('pname', this.myForm.value.pname);
+      formData.append('pdescription', this.myForm.value.pdescription);
+      formData.append('pstatus', this.myForm.value.pstatus);
+      formData.append('pprice', this.myForm.value.pprice);
+      formData.append('pstock', this.myForm.value.pstock);
+      // formData.append('pimgspath', this.multipleImages);
+
+      for (let i = 0; i < this.multipleImages.length; i++) {
+        formData.append('pimgspath', this.multipleImages[i]);
+      }
+  
+
+      console.log(formData);
+      // const formData = this.myForm.value;
+      this.gService.create('add-new-product/', formData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data:any)=>{
+        console.log(data);
+      });
+      
     }
   }
 
-  customValidator(formGroup: FormGroup) {
-    const estadoControl = formGroup.get('estado');
-    if (!estadoControl.value) {
-      estadoControl.setErrors({ 'required': true });
-    } else {
-      estadoControl.setErrors(null);
-    }
+
+  uploadMultiple(event: any) {
+    const filesList: FileList = event.target.files;
+  
+    // Convert FileList to array of file objects
+    this.multipleImages = Array.from(filesList);
+    this.imagesArray = [];
+  
+    // Convert FileList to array
+    const filesArray = Array.from(this.multipleImages);
+  
+    filesArray.forEach((element: Blob) => {
+      if (element) {
+        const reader = new FileReader();
+        reader.readAsDataURL(element);
+        reader.onload = () => {
+          this.imagesArray.push(reader.result);
+        };
+      }
+    });
   }
+
+  // onMultipleSubmit(id:any){
+  //   if(this.multipleImages.length > 0){
+  //     const formData = new FormData();
+  //     for(let img of this.multipleImages){
+  //       formData.append('files', img);
+  //     }
+  //     this.httpClient.post<any>(`http://localhost:3000/multiplefiles/${id}`, formData).subscribe(
+  //       (res) => console.log(res),
+  //       (err) => console.log(err)
+  //     );
+  //   }
+  // }
+
 
   createChart(){
   

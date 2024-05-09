@@ -199,11 +199,16 @@ def validate_json_stucture(filter_json: dict) -> bool:
     return True 
 
 def add_new_product(request): 
-        serialize_product = ProductSerializer(data = request.data)       
+        print("iamge",request.FILES)
+        serialize_product = ProductSerializer(data = request.data)    
+
         if serialize_product.is_valid():
+            print(type(request.FILES))
+            print(request.FILES.getlist("pimgspath"))
+            print(type(request.FILES.getlist("pimgspath")))
             product_model  = serialize_product.create(serialize_product.validated_data)
             product_exists = Product.objects.filter(pname = product_model.pname).exists()
-       
+
             if product_exists:
                 return Response("Existing entry using the same product name!", status = status.HTTP_400_BAD_REQUEST) 
             product_model.pimgspath = handle_uploaded_file(
@@ -211,7 +216,7 @@ def add_new_product(request):
             product_model.save()
             return Response(serialize_product.data,
                              status = status.HTTP_200_OK) 
-
+        print(serialize_product.errors)
         return Response(serialize_product.errors,
                          status = status.HTTP_400_BAD_REQUEST)
     

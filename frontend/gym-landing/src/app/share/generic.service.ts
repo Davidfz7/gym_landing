@@ -23,6 +23,12 @@ export class GenericService {
   list(endopoint: string): Observable<any> {
     return this.http.get<any>(this.urlAPI + endopoint);
   }
+
+   create(endopoint: string, objCreate: any | any): Observable<any | any[]> {
+    return this.http.post<any | any[]>(this.urlAPI + endopoint, objCreate);
+  }
+
+
   // // Obtener
   // get(endopoint: string, filtro: any): Observable<any | any[]> {
   //   return this.http.get<any | any[]>(this.urlAPI + endopoint + `/${filtro}`);
