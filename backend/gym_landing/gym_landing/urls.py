@@ -20,7 +20,8 @@ from rest_framework             import routers
 from django.conf                import settings
 from django.conf.urls.static    import static
 urlpatterns = [
-    path("", include("gym_products.urls")), 
+    path("", include("gym_products.urls")),
+    path("", include("admin_hub.urls")), 
     path('admin/', admin.site.urls),
 ]
 

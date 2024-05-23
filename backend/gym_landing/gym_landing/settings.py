@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',  
     'rest_framework',
+    'rest_framework.authtoken',
     'gym_products',
     'corsheaders',
+    'admin_hub',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
