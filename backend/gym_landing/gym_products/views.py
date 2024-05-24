@@ -7,7 +7,7 @@ from rest_framework.views       import APIView
 from rest_framework.parsers     import FormParser, MultiPartParser, JSONParser 
 #----------------------------------------------
 from .models      import Product, User
-from .serializers import ProductSerializer, UserSerializer
+from .serializers import ProductSerializer, CustomerSerializer
 from .others      import  (get_all_products,filter_products, 
                            add_new_product, get_all_sales, add_new_sale)
 #----------------------------------------------

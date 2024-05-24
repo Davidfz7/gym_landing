@@ -31,7 +31,7 @@ from rest_framework import serializers
 #         fields = ('id', 'pname', 'pdescription', 'pprice', 'pstock', 'pimgpath')
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta: 
         model  = User
         fields = ('userid', 'uname', 'uphone', 'uemail') 
