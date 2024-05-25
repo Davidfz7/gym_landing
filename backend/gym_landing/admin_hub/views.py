@@ -16,7 +16,6 @@ from django.contrib.auth.models import User
 from .others import send_email, signup, login
 class UserView(APIView):
     parser_classes = (MultiPartParser, FormParser, JSONParser)
-
     def post(self, request):
         path = request.path
         print(path)
