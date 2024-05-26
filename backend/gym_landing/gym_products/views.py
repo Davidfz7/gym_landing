@@ -5,6 +5,8 @@ from rest_framework             import status
 from rest_framework.response    import Response
 from rest_framework.views       import APIView
 from rest_framework.parsers     import FormParser, MultiPartParser, JSONParser 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 #----------------------------------------------
 from .models      import Product, User
 from .serializers import ProductSerializer, CustomerSerializer
@@ -13,11 +15,12 @@ from .others      import  (get_all_products,filter_products,
 #----------------------------------------------
 
        
-class ProductView(APIView):
-  
+class ProductView(APIView): 
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
     serializer_class = ProductSerializer
-    
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]     
+   
     def get_object(self, pk):
         
         try: 
@@ -47,6 +50,8 @@ class ProductView(APIView):
         return Response("Not done yet", status = status.HTTP_200_OK)
 
 class SaleView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     def get(self, request):
         path = request.path
         if "/get-all-sales/" == path:
