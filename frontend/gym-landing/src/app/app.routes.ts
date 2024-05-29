@@ -4,10 +4,13 @@ import { PageNotFoundComponent } from './core/page-not-found/page-not-found.comp
 import { InicioComponent } from './home/inicio/inicio.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminIndexComponent } from './admin/admin-index/admin-index.component';
+import { AvisosIndexComponent } from './avisos/avisos-index/avisos-index.component';
 
 export const routes: Routes = [
     { path:'productos', component: ProductoIndexComponent},
     { path:'inicio', component: InicioComponent},
+
+    { path:'avisos', component: AvisosIndexComponent},
 
     { path:'admin', component: AdminLoginComponent},
     { path:'admin/home', component: AdminIndexComponent},
