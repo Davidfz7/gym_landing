@@ -199,7 +199,7 @@ def validate_json_stucture(filter_json: dict) -> bool:
     return True 
 
 def add_new_product(request): 
-        print("iamge",request.FILES)
+       
         serialize_product = ProductSerializer(data = request.data)    
 
         if serialize_product.is_valid():
@@ -214,6 +214,8 @@ def add_new_product(request):
             product_model.pimgspath = handle_uploaded_file(
                                     request.FILES.getlist("pimgspath"))  
             product_model.save()
+            
+            modify_files_name(str(product_model.id))
             return Response(serialize_product.data,
                              status = status.HTTP_200_OK) 
         print(serialize_product.errors)
@@ -226,7 +228,26 @@ def get_all_sales():
     serializer = SalesSerializer(query, many = True)
     return serializer.data
 
-
+def modify_files_name(directory_id:str):
+    files_path = os.path.join(os.getcwd(), "media", "uploads", directory_id)
+    exists     = os.path.exists(files_path)
+    print(files_path)
+    if not exists:
+        return "No existing path"
+    count = 1
+    for file in os.listdir(files_path):
+        file_split = file.split(".")
+        print(file_split)
+        old_name   = os.path.join(files_path, file)
+        new_name   = os.path.join(files_path, f"img{str(count)}.{file_split[1]}") 
+        if os.path.isfile(new_name):
+            count += 1
+            print("Entre aqui para hacer el continue xD")
+            continue
+        os.rename(old_name, new_name)
+        count    += 1 
+    return "All file names updated"
+    
 def add_new_sale(request):
     print(type(request.data))
     if not isinstance(request.data, dict):
@@ -251,7 +272,16 @@ def validate_sale_post(data: dict):
         return True
     except jsonschema.exceptions.ValidationError as err:
         return False
-def get_imgs_path():
-    pimgspath = Product.objects.values("pimgspath")
-    serializer = ImgSerializer(instance=pimgspath, many = True)
+
+def get_imgs_path(): 
+    products_with_pimgspath = Product.objects.filter(pimgspath__isnull=False)
+    product_values = products_with_pimgspath.values('pname', 'pimgspath')
+    for dict in product_values:
+        directory_id =  str(dict.get('pimgspath')).split("/")
+        files_path = os.path.join(os.getcwd(), "media", "uploads", f"{directory_id[1]}") 
+        if not os.path.exists(files_path):
+            dict.update({"imgs_list": []})
+        else:
+            dict.update({"imgs_list": os.listdir(files_path)})
+    serializer = ImgSerializer(instance = product_values, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK) 

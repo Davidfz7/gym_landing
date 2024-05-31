@@ -10,7 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 #----------------------------------------------
 from .models      import Product, User
 from .serializers import ProductSerializer, CustomerSerializer
-from .others      import  (get_all_products,filter_products, 
+from .utils      import  (get_all_products,filter_products, 
                            add_new_product, get_all_sales, add_new_sale,
                            get_imgs_path)
 #----------------------------------------------
@@ -19,8 +19,8 @@ from .others      import  (get_all_products,filter_products,
 class ProductView(APIView): 
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
     serializer_class = ProductSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]     
+    # permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]     
    
     def get_object(self, pk):
         
@@ -42,14 +42,13 @@ class ProductView(APIView):
 class ProductViewNoAuth(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
     serializer_class = ProductSerializer
-   
- 
+
     def get(self, request, pk = None):
         path = request.path
         if "/get-all-products/" == path:
             all_products = get_all_products()
             return Response(all_products, status = status.HTTP_200_OK)
-        if "/get-imgs-paths/" == path: 
+        if "/get-imgs-names/" == path: 
             return get_imgs_path() 
         if pk is not None: 
             try: 

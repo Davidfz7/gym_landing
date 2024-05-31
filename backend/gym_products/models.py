@@ -11,11 +11,12 @@ class Product(models.Model):
    
     id           = models.AutoField(primary_key=True)
     pname        = models.CharField(max_length=255)
+    pbrand       = models.CharField(max_length=255, null = True, blank = True)
     pdescription = models.TextField(blank=True, null=True)
     pstatus      = models.CharField(max_length = 20, choices = PRODUCT_AVAILABILITY)
     pprice       = models.DecimalField(max_digits=10, decimal_places=2)
     pstock       = models.IntegerField()
-    pimgspath     = models.FileField(upload_to = 'uploads/', null = True, blank = True)
+    pimgspath    = models.FileField(upload_to = 'uploads/', null = True, blank = True)
  
     class Meta:
         db_table = 'product'

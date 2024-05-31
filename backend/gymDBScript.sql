@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS product;
 CREATE TABLE product (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pname VARCHAR(255) UNIQUE NOT NULL,
+    pbrand VARCHAR(255),
     pdescription TEXT,
     pstatus ENUM("disponible", "agotado", "proximamente", "inactivo") NOT NULL,
     pcategory ENUM("maquinas", "pesas libres", "equipos cardiovasculares") NOT NULL,

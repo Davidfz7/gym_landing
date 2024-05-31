@@ -12,7 +12,7 @@ urlpatterns = [
     path("add-new-sale/", views.SaleView().as_view(), name = "add_new_sale"),
     path("get-all-sales/" ,views.SaleView.as_view(), name = "get_all_sales"),
     path("get-product/<int:pk>",  views.ProductViewNoAuth.as_view(),  name = "filter_products"),
-    path("get-imgs-paths/", views.ProductViewNoAuth.as_view(), name = "get_imgs_paths")
+    path("get-imgs-names/", views.ProductViewNoAuth.as_view(), name = "get_imgs_paths")
 ] 
 
 
