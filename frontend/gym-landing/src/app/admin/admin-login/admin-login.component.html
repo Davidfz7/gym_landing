@@ -2,32 +2,41 @@
     <mat-card class="loginDiv">
         <mat-card-header>
           <mat-card-title class="titulo">Acceso de Administrador</mat-card-title>
-          <mat-card-subtitle>Por favor proporcione el codigo de acceso</mat-card-subtitle>
+          <mat-card-subtitle>Por favor proporcione el correo de acceso</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <form class="example-form formCorreo">
+            <form [formGroup]="loginForm" class="example-form formCorreo">
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Correo</mat-label>
-                  <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher" [(ngModel)]="value" placeholder="Ej. correo@ejemplo.com" >
+                  <input type="text" matInput formControlName="email" [errorStateMatcher]="matcher" [(ngModel)]="value" placeholder="Ej. correo@ejemplo.com" >
+                  
                          @if (value) {
                             <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                               <mat-icon>close</mat-icon>
                             </button>
                           }
                   <mat-hint class="hint">Ingrese el correo de administrador</mat-hint>
-                  @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+                  <!-- @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
                     <mat-error>Por favor ingrese un correo valido</mat-error>
                   }
                   @if (emailFormControl.hasError('required')) {
                     <mat-error>El correo es <strong>requerido</strong></mat-error>
-                  }
+                  } -->
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>contra</mat-label>
+                  <input type="password" matInput  formControlName="password" [errorStateMatcher]="matcher" [(ngModel)]="value2" placeholder="contra" >
+                        
+                  <mat-hint class="hint">Ingrese el pass de administrador</mat-hint>
+
                 </mat-form-field>
             </form>
               
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button>Limpiar</button>
-          <button mat-button>Entrar</button>
+          <button mat-button type="button" (click)="loginForm.reset()">Limpiar</button>
+          <button mat-button type="submit" [disabled]="loginForm.invalid" (click)="onSubmit()">Entrar</button>
         </mat-card-actions>
       </mat-card>
 </div>

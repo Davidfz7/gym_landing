@@ -22,12 +22,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
 export interface ProdsData {
+  id: number;
   pname: string;
   pdescription: string;
   pstatus: string;
   pprice: string;
   pstock: number;
-  // pimgspath:string;
+  pimgspath:string;
 }
 
 export interface PeriodicElement {
@@ -66,6 +67,7 @@ export class AdminIndexComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   datos:any;
+  datosSales:any;
   destroy$:Subject<boolean>=new Subject<boolean>();
   dataProds:any;
 
@@ -95,6 +97,7 @@ export class AdminIndexComponent implements AfterViewInit {
     
 
     this.listaProductos();
+    this.listaSales();
   }
 
   ngOnInit(){
@@ -128,6 +131,15 @@ export class AdminIndexComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource(this.dataProds);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      });
+  }
+
+  listaSales(){
+    this.gService.list('get-all-sales/')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data:any)=>{
+        this.datosSales=data;
+        console.log(this.datosSales);
       });
   }
 

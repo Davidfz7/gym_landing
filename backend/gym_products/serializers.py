@@ -43,14 +43,15 @@ class CustomerSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ProductSerializer(serializers.Serializer):
-   
+    
+    id=serializers.IntegerField(required = False)
     pname        = serializers.CharField(max_length = 255)
     pdescription = serializers.CharField()
     pstatus      = serializers.CharField()
     pprice       = serializers.DecimalField(max_digits=10, decimal_places= 2)
     pstock       = serializers.IntegerField()
     pimgspath     = serializers.FileField(required = False, allow_null = True)
-
+    
     #With this method we de-serialize(kind of parsing) the data into a Product object(or Model)
     def create(self, validated_data):
         return Product(**validated_data) 

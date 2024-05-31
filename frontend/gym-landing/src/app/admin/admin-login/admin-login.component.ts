@@ -6,6 +6,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from '../../share/auth.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -25,7 +27,53 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 
 export class AdminLoginComponent {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  // emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
   value = '';
+  value2 = '';
+  loginForm: FormGroup;
+
+  
+
+  correo='';
+
+  constructor(private fb: FormBuilder, private authService: AuthService) {
+    this.loginForm = this.fb.group({
+      email: [Validators.required],
+      password: [Validators.required],
+    });
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const email = this.loginForm.get('email').value;
+      const password = this.loginForm.get('password').value;
+      this.authService.login(email, password).subscribe(response => {
+        if (this.authService.isLoggedIn()) {
+          console.log('Login successful');
+          console.log(Date.now)
+        } else {
+          console.log('Login failed');
+        }
+      });
+    }
+  }
+
+
+  // login(): void {
+  //   this.authService.login(this.correo).subscribe(response => {
+  //     if (this.authService.isLoggedIn()) {
+  //       console.log('Login successful');
+  //       // Redirigir al usuario o hacer otra cosa
+  //     } else {
+  //       console.log('Login failed');
+  //     }
+  //   });
+  // }
+
+  logout(): void {
+    this.authService.logout();
+    console.log('Logged out');
+  }
+
 }
