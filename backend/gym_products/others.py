@@ -1,7 +1,7 @@
 import jsonschema.exceptions
 from gym_landing.settings       import MEDIA_ROOT
 from .models                    import Product, Sales
-from .serializers               import ProductSerializer, SalesSerializer 
+from .serializers               import ProductSerializer, SalesSerializer, ImgSerializer 
 from rest_framework.response    import Response 
 from rest_framework             import status 
 from itertools                  import zip_longest
@@ -251,4 +251,7 @@ def validate_sale_post(data: dict):
         return True
     except jsonschema.exceptions.ValidationError as err:
         return False
-   
+def get_imgs_path():
+    pimgspath = Product.objects.values("pimgspath")
+    serializer = ImgSerializer(instance=pimgspath, many = True)
+    return Response(serializer.data, status=status.HTTP_200_OK) 
