@@ -11,7 +11,8 @@ from rest_framework.authentication import TokenAuthentication
 from .models      import Product, User
 from .serializers import ProductSerializer, CustomerSerializer
 from .others      import  (get_all_products,filter_products, 
-                           add_new_product, get_all_sales, add_new_sale)
+                           add_new_product, get_all_sales, add_new_sale,
+                           get_imgs_path)
 #----------------------------------------------
 
        
@@ -35,20 +36,30 @@ class ProductView(APIView):
         if "/add-new-images/"   == path:
             return Response("Yes still working on it")
 
-    def get(self, request):
-        path = request.path
-
-        if "/get-all-products/" == path:
-            all_products = get_all_products()
-            return Response(all_products, status = status.HTTP_200_OK)
-
-        if "/filter-products/"   == path:
-            response = filter_products(params = request.data)
-        return response
-    
     def delete(self, request, pk): 
         return Response("Not done yet", status = status.HTTP_200_OK)
 
+class ProductViewNoAuth(APIView):
+    parser_classes   = (MultiPartParser, FormParser, JSONParser)
+    serializer_class = ProductSerializer
+   
+ 
+    def get(self, request, pk = None):
+        path = request.path
+        if "/get-all-products/" == path:
+            all_products = get_all_products()
+            return Response(all_products, status = status.HTTP_200_OK)
+        if "/get-imgs-paths/" == path: 
+            return get_imgs_path() 
+        if pk is not None: 
+            try: 
+                product = Product.objects.get(pk = pk)
+                serializer = ProductSerializer(instance= product)      
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            except Product.DoesNotExist:
+                return Response({"info":"Product does not exist"}, status = status.HTTP_404_NOT_FOUND)
+        
+ 
 class SaleView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]

@@ -8,10 +8,11 @@ urlpatterns = [
     #Product URL views
     path("", views.ProductView.as_view()),
     path("add-new-product/",  views.ProductView.as_view(),  name = "add_new_product"),
-    path("get-all-products/", views.ProductView.as_view(),  name = "get_all_products"),
+    path("get-all-products/", views.ProductViewNoAuth.as_view(),  name = "get_all_products"),
     path("add-new-sale/", views.SaleView().as_view(), name = "add_new_sale"),
-    path("get-all-sales/" ,views.SaleView.as_view(), name = "get_all_sales")
-    #path("filter-products/",  views.ProductView.as_view(),  name = "filter_products"),
+    path("get-all-sales/" ,views.SaleView.as_view(), name = "get_all_sales"),
+    path("get-product/<int:pk>",  views.ProductViewNoAuth.as_view(),  name = "filter_products"),
+    path("get-imgs-paths/", views.ProductViewNoAuth.as_view(), name = "get_imgs_paths")
 ] 
 
 

@@ -60,6 +60,8 @@ class ProductSerializer(serializers.Serializer):
         instance.pname = validate_data.get('pname', instance.pname)
         instance.save()
         return instance 
+class ImgSerializer(serializers.Serializer):
+    pimgspath = serializers.FileField(required = False)
 
 class SalesSerializer(serializers.Serializer):
     productid = serializers.PrimaryKeyRelatedField(queryset = Product.objects.all())
