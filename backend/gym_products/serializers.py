@@ -1,4 +1,4 @@
-from gym_products.models import Product, User
+from gym_products.models import Product, User, Sales
 from rest_framework import serializers
 # #First way to serialize data#
 # class ProductsSerializerV1(serializers.Serializer):
@@ -62,15 +62,60 @@ class ProductSerializer(serializers.Serializer):
     def update(self, instance, validate_data):
         instance.pname = validate_data.get('pname', instance.pname)
         instance.save()
-        return instance 
+        return instance
+class UpdateProductSerializer(serializers.Serializer):
+    id           =serializers.IntegerField() 
+    pname        = serializers.CharField(max_length = 255, required = False)
+    pbrand       = serializers.CharField(max_length = 255, required = False)
+    pdescription = serializers.CharField(required = False)
+    pstatus      = serializers.CharField(required = False)
+    pcategory    = serializers.CharField(required = False)
+    pprice       = serializers.DecimalField(max_digits=10, decimal_places= 2, required = False)
+    pstock       = serializers.IntegerField(required = False)
+    pimgspath    = serializers.FileField(required = False, allow_null = True)
+    
+    def update(self, instance: Product, validate_data: dict):
+        instance.pname        = validate_data.get('pname')
+        instance.pbrand       = validate_data.get('pbrand')
+        instance.pdescription = validate_data.get('pdescription')
+        instance.pstatus      = validate_data.get('pstatus')
+        instance.pcategory    = validate_data.get('pcategory')
+        instance.pprice       = validate_data.get('pprice')
+        instance.pstock       = validate_data.get('pstock')
+ 
 class ImgSerializer(serializers.Serializer):
     id         = serializers.IntegerField(required = False)
     pname      = serializers.CharField(required = False) 
     pimgspath  = serializers.CharField(required = False)
     imgs_list  = serializers.ListField()
+
 class SalesSerializer(serializers.Serializer):
+    saleid    = serializers.IntegerField(required = False)
     productid = serializers.PrimaryKeyRelatedField(queryset = Product.objects.all())
     quantity  = serializers.IntegerField()
     date      = serializers.DateField()
+
     def create(self, validated_data):
-        return Product(**validated_data)
+        return Sales(**validated_data)
+    def update(self, instance: Sales, validate_data):
+        instance.productid = validate_data.get('productid') 
+        instance.quantity  = validate_data.get('quantity')
+        instance.date      = validate_data.get('date')
+        instance.save()
+        return instance
+
+class UpdateSalesSerializer(serializers.Serializer):
+
+    productid = serializers.PrimaryKeyRelatedField(queryset = Product.objects.all(), required = False)
+    quantity  = serializers.IntegerField(required = False)
+    date      = serializers.DateField(required = False)
+
+    def update(self, instance: Sales, validate_data):
+        instance.productid = validate_data.get('productid') 
+        instance.quantity  = validate_data.get('quantity')
+        instance.date      = validate_data.get('date')
+        instance.save()
+        return instance
+
+
+        
