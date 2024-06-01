@@ -19,11 +19,10 @@ from .utils      import  (get_all_products,filter_products,
 class ProductView(APIView): 
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
     serializer_class = ProductSerializer
-    # permission_classes = [IsAuthenticated]
-    # authentication_classes = [TokenAuthentication]     
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]     
    
-    def get_object(self, pk):
-        
+    def get_object(self, pk): 
         try: 
             return Product.objects.get(pk = pk)
         except Product.DoesNotExist:
