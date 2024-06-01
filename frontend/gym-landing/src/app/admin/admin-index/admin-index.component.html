@@ -6,7 +6,7 @@
       <canvas  id="MyChart">{{chart}}</canvas>
     </div>
     <div class="rows">
-      <h4>Ingresos Mensuales</h4>
+      <h4>Ingresos por Producto</h4>
       <canvas  id="MyChart2">{{chart2}}</canvas>
     </div>
     <div class="rows">
@@ -15,19 +15,19 @@
         <!-- Position Column -->
         <ng-container matColumnDef="position">
           <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+          <mat-cell *matCellDef="let product"> {{product.position}} </mat-cell>
         </ng-container>
       
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef> Nombre del Producto </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{product.name}} </mat-cell>
         </ng-container>
       
         <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef> Cantidad Total Vendida </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{product.quantity}} </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" style="margin-top: 10px;">
     <mat-tab label="Todos los productos">
       <div class="tabla">
         <mat-form-field>
@@ -198,12 +198,10 @@
         </form>
       </div>
 
-      
-      
-      
+   
     </mat-tab>
     <mat-tab label="Registrar Venta">
-      <form [formGroup]="myForm2" (ngSubmit)="onSubmit()" class="divForm">
+      <form [formGroup]="myForm2" (ngSubmit)="onSubmitVenta()" class="divForm">
           <mat-form-field appearance="outline" class="inputsForm">
             <mat-label>Producto</mat-label>
             <mat-select formControlName="product" placeholder="Producto">
@@ -222,10 +220,5 @@
         <button mat-flat-button color="primary" type="submit" [disabled]="!myForm2.valid">Registrar Venta</button>
       </form>
     </mat-tab>
-  </mat-tab-group>
-
-
-
-
-            
+  </mat-tab-group>      
 </div>

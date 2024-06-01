@@ -20,6 +20,7 @@ import { GenericService } from '../../share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from '../../share/auth.service';
 
 export interface ProdsData {
   id: number;
@@ -32,20 +33,6 @@ export interface ProdsData {
   pstock: number;
   pimgspath:string;
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079},
-  {position: 2, name: 'Helium', weight: 4.0026},
-  {position: 3, name: 'Lithium', weight: 6.941},
-  // {position: 4, name: 'Beryllium', weight: 9.0122},
-  // {position: 5, name: 'Boron', weight: 10.811},
-];
 
 
 @Component({
@@ -62,8 +49,9 @@ export class AdminIndexComponent implements AfterViewInit {
   displayedColumns: string[] = ['pname', 'pdescription', 'pstatus', 'pprice', 'pstock'];
   dataSource: MatTableDataSource<ProdsData>;
 
-  displayedColumns2: string[] = ['position', 'name', 'weight'];
-  dataSource2 = ELEMENT_DATA;
+  dataSource2: MatTableDataSource<any>;
+  displayedColumns2: string[] = ['position', 'name', 'quantity']; // Ajusta las columnas que deseas mostrar
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -72,20 +60,29 @@ export class AdminIndexComponent implements AfterViewInit {
   datosSales:any;
   destroy$:Subject<boolean>=new Subject<boolean>();
   dataProds:any;
+  productDict:any;
 
 
   chartData: number[] = [1,2,3,4,5,6,7];
   chartLabels: string[] = ["1","2","3","4","5","6","7"];
+  chartProductNames: string[] = [];
+  chartRevenue: number[] = [];
   public chart: any;
   public chart2: any;
+
+  doughnutChartLabels: string[] = [];
+  doughnutChartData: number[] = [];
 
   myForm: FormGroup;
   myForm2: FormGroup;
 
+  dateNow: Date;
+  dateString: string;
   imageUrl: any;
   logo:any;
   multipleImages:any;
   imagesArray:any;
+  
 
 
   constructor(private gService:GenericService,
@@ -93,16 +90,19 @@ export class AdminIndexComponent implements AfterViewInit {
     private route:ActivatedRoute,
     private httpClient:HttpClient,
     private sanitizer: DomSanitizer,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
   ) {
 
 
     this.listaProductos();
     this.listaSales();
+
+
   }
 
   ngOnInit(){
-    this.createChart();
+
     this.myForm = this.formBuilder.group({
       pname: ['', Validators.required],
       pbrand: ['', Validators.required],
@@ -124,7 +124,7 @@ export class AdminIndexComponent implements AfterViewInit {
  
 
   ngAfterViewInit() {
-    
+
   }
 
   ngAfterContentInit(){
@@ -150,8 +150,19 @@ export class AdminIndexComponent implements AfterViewInit {
       .subscribe((data:any)=>{
         this.datosSales=data;
         console.log(this.datosSales);
+
+        this.prepareChartData();
+        this.prepareDoughnutChartData();
+        this.createChart();
+
+        
+  
+        this.loadSoldProds();
+
       });
   }
+
+  
 
   onSubmit() {
     if (this.myForm.valid) {
@@ -184,6 +195,94 @@ export class AdminIndexComponent implements AfterViewInit {
     }
   }
 
+  getCurrentFormattedDate(): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Añade 1 porque los meses en JS son 0-indexed
+    const day = ('0' + date.getDate()).slice(-2);
+    console.log(`${year}-${month}-${day}`)
+    return `${year}-${month}-${day}`;
+  }
+
+  stringToDate(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    
+    return new Date(year, month - 1, day); // Restamos 1 al mes porque los meses en JS son 0-indexed
+  }
+
+  onSubmitVenta() {
+    if (this.myForm2.valid) {
+
+      const formData = new FormData();
+
+      // this.dateNow = this.stringToDate(this.getCurrentFormattedDate());
+      this.dateString = this.getCurrentFormattedDate();
+      // console.log(this.dateNow);
+
+      formData.append('productid', this.myForm2.value.product);
+      formData.append('quantity', this.myForm2.value.cantidad);
+      formData.append('date', this.dateString);
+
+      console.log(formData);
+ 
+
+      this.gService.create('add-new-sale/', formData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data:any)=>{
+        console.log(data);
+        this.listaSales();
+      });
+
+  
+    }
+  }
+
+  loadSoldProds(){
+    const productDict = this.dataProds.reduce((dict, product) => {
+      dict[product.id] = product;
+      return dict;
+    }, {});
+
+      // Agrupar las ventas por producto y calcular la cantidad total vendida
+      const salesByProduct = this.datosSales.reduce((acc, sale) => {
+        if (!acc[sale.productid]) {
+          acc[sale.productid] = {
+            productid: sale.productid,
+            quantity: 0
+          };
+        }
+        acc[sale.productid].quantity += sale.quantity;
+        return acc;
+      }, {});
+
+      // Convertir a un array de objetos { productid, quantity }
+      const productsByQuantity = Object.keys(salesByProduct).map(productId => ({
+        productid: productId,
+        quantity: salesByProduct[productId].quantity
+      }));
+
+      // Ordenar por cantidad vendida en orden descendente
+      productsByQuantity.sort((a, b) => b.quantity - a.quantity);
+
+      // Seleccionar los primeros 5 productos (los más vendidos)
+      const top5Products = productsByQuantity.slice(0, 3);
+
+      // Mapear los datos para la tabla
+      
+       // Mapear los datos para la tabla
+       const tableData = top5Products.map((product, index) => ({
+        position: index + 1,
+        name: productDict[product.productid]?.pname || 'Unknown Product',
+        quantity: product.quantity
+      }));
+
+      // Asignar los datos al dataSource
+      this.dataSource2 = new MatTableDataSource(tableData);
+
+  }
+
+
+
 
   uploadMultiple(event: any) {
     const filesList: FileList = event.target.files;
@@ -206,67 +305,187 @@ export class AdminIndexComponent implements AfterViewInit {
     });
   }
 
-  // onMultipleSubmit(id:any){
-  //   if(this.multipleImages.length > 0){
-  //     const formData = new FormData();
-  //     for(let img of this.multipleImages){
-  //       formData.append('files', img);
-  //     }
-  //     this.httpClient.post<any>(`http://localhost:3000/multiplefiles/${id}`, formData).subscribe(
-  //       (res) => console.log(res),
-  //       (err) => console.log(err)
-  //     );
-  //   }
-  // }
 
+  prepareChartData() {
+    // Crear un diccionario de productos para una búsqueda rápida
+  const productDict = this.dataProds.reduce((dict, product) => {
+    dict[product.id] = product;
+    return dict;
+  }, {});
+
+  // Agrupar las ventas por mes y calcular los ingresos
+  const salesByMonth = this.datosSales.reduce((acc, sale) => {
+    const month = sale.date.slice(0, 7); // Obtener el año y mes en formato "YYYY-MM"
+    if (!acc[month]) {
+      acc[month] = { quantity: 0, revenue: 0 };
+    }
+    acc[month].quantity += sale.quantity;
+    acc[month].revenue += sale.quantity * productDict[sale.productid].pprice;
+    return acc;
+  }, {});
+
+  // Ordenar las claves de los meses y limitar a los últimos 6 meses
+  const sortedMonths = Object.keys(salesByMonth)
+    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+    .slice(-6); // Obtener los últimos 6 meses
+
+  // Preparar los datos para Chart.js
+  this.chartLabels = sortedMonths;
+  this.chartData = sortedMonths.map(month => salesByMonth[month].quantity);
+  this.chartRevenue = sortedMonths.map(month => salesByMonth[month].revenue);
+  }
+
+  prepareDoughnutChartData() {
+    // Crear un diccionario de productos para una búsqueda rápida
+    const productDict = this.dataProds.reduce((dict, product) => {
+      dict[product.id] = product;
+      return dict;
+    }, {});
+
+    // Agrupar las ventas por producto y calcular los ingresos totales
+    const salesByProduct = this.datosSales.reduce((acc, sale) => {
+      if (!acc[sale.productid]) {
+        acc[sale.productid] = 0;
+      }
+      acc[sale.productid] += sale.quantity * productDict[sale.productid].pprice; // Multiplicar la cantidad vendida por el precio del producto
+      return acc;
+    }, {});
+
+    // Convertir a un array de objetos { productid, earnings }
+    const productsWithEarnings = Object.keys(salesByProduct).map(productId => ({
+      productid: productId,
+      earnings: salesByProduct[productId]
+    }));
+
+    productsWithEarnings.sort((a, b) => b.earnings - a.earnings);
+    const top8Products = productsWithEarnings.slice(0, 8);
+
+       // Obtener los nombres de los productos y los ingresos totales para los top 8
+       this.doughnutChartLabels = top8Products.map(product => productDict[product.productid].pname);
+       this.doughnutChartData = top8Products.map(product => product.earnings);
+  }
 
   createChart(){
   
     this.chart = new Chart("MyChart", {
-      type: 'bar', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
-	       datasets: [
+      type: 'bar',
+      data: {
+        labels: this.chartLabels,
+        datasets: [
           {
-            label: "Sales",
-            data: ['467','576', '572', '79', '92',
-								 '574', '573', '576'],
-                 borderWidth: 1,
-            backgroundColor: '#D6A328'
+            label: 'Ventas',
+            data: this.chartData,
+            borderWidth: 1,
+            backgroundColor: '#D6A328',
+            yAxisID: 'y-axis-sales'
           },
           {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-									 '0.00', '538', '541'],
-                   borderWidth: 1,
+            label: 'Ingresos',
+            data: this.chartRevenue,
+            borderWidth: 1,
             backgroundColor: '#FBF791',
-          }  
+            yAxisID: 'y-axis-revenue'
+          }
         ]
       },
       options: {
-        aspectRatio:3.0
+        aspectRatio: 3.0,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Mes'
+            }
+          },
+          'y-axis-sales': {
+            type: 'linear',
+            position: 'left',
+            title: {
+              display: true,
+              text: 'Cantidad de Ventas'
+            }
+          },
+          'y-axis-revenue': {
+            type: 'linear',
+            position: 'right',
+            title: {
+              display: true,
+              text: 'Ingresos'
+            },
+            grid: {
+              drawOnChartArea: false // Sólo dibuja la cuadrícula para el eje de ventas
+            }
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              title: (context) => {
+                return `Mes: ${context[0].label}`;
+              },
+              label: (context) => {
+                const dataset = context.dataset.label;
+                const value = context.raw;
+                return `${dataset}: ${value}`;
+              }
+            }
+          }
+        }
       }
-      
     });
 
     this.chart2 = new Chart("MyChart2", {
-      // type: 'bar',
+      // // type: 'bar',
+      // type: 'pie',
+      // data: {
+      //   // labels: this.chartLabels, 
+      //    labels: ["8am", "9am", "10am", "11am", "12pm"],
+	    //   //  datasets: [
+      //   //   { label: "Ingresos:", data: this.chartData,},
+      //   //   ]
+      //   datasets: [{
+      //     label: 'Ingresos',
+      //     data: [12, 19, 3, 5, 2],
+      //     borderWidth: 1
+      //   }]
+      // },
+      // options: { aspectRatio:3}
+      
       type: 'pie',
       data: {
-        // labels: this.chartLabels, 
-         labels: ["8am", "9am", "10am", "11am", "12pm"],
-	      //  datasets: [
-        //   { label: "Ingresos:", data: this.chartData,},
-        //   ]
+        labels: this.doughnutChartLabels,
         datasets: [{
-          label: 'Ingresos',
-          data: [12, 19, 3, 5, 2],
-          borderWidth: 1
+          label: 'Ganancias por Producto',
+          data: this.doughnutChartData,
+          // backgroundColor: [
+          //   '#FF6384',
+          //   '#36A2EB',
+          //   '#FFCE56',
+          //   '#4BC0C0',
+          //   '#9966FF',
+          //   '#FF9F40',
+          //   '#FF6384',
+          //   '#36A2EB'
+          // ]
         }]
       },
-      options: { aspectRatio:3}
+      options: {
+        aspectRatio: 3,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem) => {
+                let label = tooltipItem.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                const value = tooltipItem.raw || 0;
+                return `${label}₡${Number(value).toFixed(2)}`; // Formatear el valor como dinero
+              }
+            }
+          }
+        }
+      }
     });
     
   }
