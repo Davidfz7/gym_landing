@@ -22,9 +22,8 @@ class ProductView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]     
    
-    def get_object(self, pk):
-        
-        try: SS  
+    def get_object(self, pk): 
+        try: 
             return Product.objects.get(pk = pk)
         except Product.DoesNotExist:
             raise Http404

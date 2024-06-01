@@ -12,6 +12,7 @@ class TokenExpiryMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        print("Hola")
         if not self.requires_auth_header(request.path_info):
             return self.get_response(request)
 

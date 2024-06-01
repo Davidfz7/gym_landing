@@ -275,7 +275,7 @@ def validate_sale_post(data: dict):
 
 def get_imgs_path(): 
     products_with_pimgspath = Product.objects.filter(pimgspath__isnull=False)
-    product_values = products_with_pimgspath.values('pname', 'pimgspath')
+    product_values = products_with_pimgspath.values('id','pname', 'pimgspath')
     for dict in product_values:
         directory_id =  str(dict.get('pimgspath')).split("/")
         files_path = os.path.join(os.getcwd(), "media", "uploads", f"{directory_id[1]}") 
