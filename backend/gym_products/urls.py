@@ -11,8 +11,10 @@ urlpatterns = [
     path("get-all-products/", views.ProductViewNoAuth.as_view(),  name = "get_all_products"),
     path("add-new-sale/", views.SaleView().as_view(), name = "add_new_sale"),
     path("get-all-sales/" ,views.SaleView.as_view(), name = "get_all_sales"),
-    path("get-product/<int:pk>",  views.ProductViewNoAuth.as_view(),  name = "filter_products"),
-    path("get-imgs-names/", views.ProductViewNoAuth.as_view(), name = "get_imgs_paths")
+    path("get-product/<int:pk>/",  views.ProductViewNoAuth.as_view(),  name = "filter_products"),
+    path("get-imgs-names/", views.ProductViewNoAuth.as_view(), name = "get_imgs_paths"),
+    path("update-sale/<int:pk>/", views.SaleView.as_view(), name = "update_sale"),
+    path("delete-sale/<int:pk>/", views.SaleView.as_view(), name = "delete_sale")
 ] 
 
 

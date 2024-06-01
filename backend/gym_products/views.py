@@ -8,11 +8,11 @@ from rest_framework.parsers     import FormParser, MultiPartParser, JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 #----------------------------------------------
-from .models      import Product, User
-from .serializers import ProductSerializer, CustomerSerializer
+from .models      import Product, User, Sales
+from .serializers import ProductSerializer, CustomerSerializer, SalesSerializer
 from .utils      import  (get_all_products,filter_products, 
                            add_new_product, get_all_sales, add_new_sale,
-                           get_imgs_path)
+                           get_imgs_path, update_sale)
 #----------------------------------------------
 
        
@@ -59,6 +59,7 @@ class ProductViewNoAuth(APIView):
         
  
 class SaleView(APIView):
+    parser_classes   = (MultiPartParser, FormParser, JSONParser)
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     def get(self, request):
@@ -72,3 +73,17 @@ class SaleView(APIView):
         path = request.path
         if "/add-new-sale/" == path: 
             return add_new_sale(request)
+
+    def patch(self, request, pk = None):
+        try: 
+            sale = Sales.objects.get(pk = pk)
+            return update_sale(request, sale)
+        except Sales.DoesNotExist:
+            return Response({"info": "Sale does not exist"}, status = status.HTTP_404_NOT_FOUND)
+    def delete(self, request, pk = None):
+        try: 
+            sale = Sales.objects.get(pk = pk)
+            sale.delete()
+            return Response({"info": "Sale deleted"}, status= status.HTTP_200_OK)
+        except Sales.DoesNotExist:
+            return Response({"info": "Sale does not exist"}, status = status.HTTP_404_NOT_FOUND)

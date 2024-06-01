@@ -1,7 +1,7 @@
 import jsonschema.exceptions
 from gym_landing.settings       import MEDIA_ROOT
 from .models                    import Product, Sales
-from .serializers               import ProductSerializer, SalesSerializer, ImgSerializer 
+from .serializers               import ProductSerializer, SalesSerializer, ImgSerializer, UpdateSalesSerializer 
 from rest_framework.response    import Response 
 from rest_framework             import status 
 from itertools                  import zip_longest
@@ -249,22 +249,12 @@ def modify_files_name(directory_id:str):
     return "All file names updated"
     
 def add_new_sale(request):
-    print(type(request.data))
-    if not isinstance(request.data, dict):
-        return Response(f"Need a json structure {SALES_SCHEMA}", status = status.HTTP_400_BAD_REQUEST)
-    data = dict(request.data)
-    if not validate_sale_post(data):
-        return Response(f"Not a valid json: {SALES_SCHEMA}", 
-                        status = status.HTTP_400_BAD_REQUEST)
-    try:
-        product   = Product.objects.get(pk = data.get("productid"))
-        new_sale  = Sales(productid = product, quantity = data.get("quantity"), 
-                          date = data.get("date")) 
+    serializer = SalesSerializer(data = request.data) 
+    if serializer.is_valid():
+        new_sale = serializer.create(serializer.validated_data)
         new_sale.save()
-        serialize = SalesSerializer(new_sale)
-        return Response(serialize.data, status = status.HTTP_200_OK)
-    except Product.DoesNotExist as err:
-        return Response(str(err), status = status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 def validate_sale_post(data: dict):
     try:
@@ -284,4 +274,25 @@ def get_imgs_path():
         else:
             dict.update({"imgs_list": os.listdir(files_path)})
     serializer = ImgSerializer(instance = product_values, many = True)
-    return Response(serializer.data, status=status.HTTP_200_OK) 
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+def update_sale(request, instance: Sales):
+    required_keys = ['productid', 'quantity', 'date']
+    values_in_instance = [instance.productid.id, 
+                          instance.quantity, str(instance.date)]
+    data_dict:dict = request.data
+    count_a = 0
+    count_b = 0
+    for key in required_keys:
+        if key not in data_dict.keys():
+            count_a += 1
+            data_dict.update({key: values_in_instance[count_b]})      
+        count_b += 1  
+    if count_a == 3:
+        return Response({"error": "Need a field name to update or not a valid field name"}, status= status.HTTP_400_BAD_REQUEST)
+    serializer  = UpdateSalesSerializer(data = request.data) 
+    if serializer.is_valid():
+        updated_sale = serializer.update(instance, serializer.validated_data)  
+        return Response(SalesSerializer(instance = updated_sale).data,
+                        status= status.HTTP_200_OK)
+    return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
