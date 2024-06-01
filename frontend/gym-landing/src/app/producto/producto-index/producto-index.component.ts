@@ -16,6 +16,7 @@ import { GenericService } from '../../share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-producto-index',
@@ -24,7 +25,8 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatCheckboxModule,
     MatSliderModule,
     MatMenuModule,
-    RouterLink,
+    RouterLink, 
+    CommonModule,
   ],
   templateUrl: './producto-index.component.html',
   styleUrl: './producto-index.component.scss'
@@ -55,7 +57,7 @@ export class ProductoIndexComponent {
   }
 
   listaProductos(){
-    this.gService.list('get-all-products')
+    this.gService.list('get-all-products/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         this.datos=data;

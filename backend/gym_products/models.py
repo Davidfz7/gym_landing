@@ -3,17 +3,14 @@ from django.db import models
 from gym_landing.settings import MEDIA_ROOT
 # Create your models here.
 class Product(models.Model):
-    PRODUCT_AVAILABILITY = {
-        "available"   : "available",
-        "out of stock": "out of stock",
-        "coming soon ": "coming soon"
-    }
+
    
     id           = models.AutoField(primary_key=True)
     pname        = models.CharField(max_length=255)
     pbrand       = models.CharField(max_length=255, null = True, blank = True)
     pdescription = models.TextField(blank=True, null=True)
-    pstatus      = models.CharField(max_length = 20, choices = PRODUCT_AVAILABILITY)
+    pstatus      = models.CharField(max_length = 20)
+    pcategory    = models.CharField(max_length = 50)
     pprice       = models.DecimalField(max_digits=10, decimal_places=2)
     pstock       = models.IntegerField()
     pimgspath    = models.FileField(upload_to = 'uploads/', null = True, blank = True)

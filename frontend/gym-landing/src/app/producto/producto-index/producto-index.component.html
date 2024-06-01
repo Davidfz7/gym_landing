@@ -94,279 +94,28 @@
             
             <mat-grid-list [cols]="4" rowHeight="450px" gutterSize="1px">
 
-                <mat-grid-tile>
+                <mat-grid-tile *ngFor="let product of datos">
                     <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                        </mat-card-actions>
+                      <div class="cartasProd">
+                        <!-- <img mat-card-image [src]="product.imgsPath" alt="{{ product.name }}"> -->
+                      </div>
+                      <mat-card-content>
+                        <p>{{ product.pdescription }}</p>
+                      </mat-card-content>
+                      <mat-card-header>
+                        <mat-card-title>{{ product.pname }} | ₡{{ product.pprice }}</mat-card-title>
+                        <mat-card-subtitle>{{ product.pcategory }}</mat-card-subtitle>
+                      </mat-card-header>
+                      <mat-card-actions>
+                        <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
+                      </mat-card-actions>
                     </div>
-                </mat-grid-tile>
-
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                      
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-          
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-          
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-          
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-          
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-          
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-          
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div>
-                        <div class="cartasProd">
-                            <img mat-card-image src="assets/image.png" alt="Smith Machine">
-                        </div>
-                        <mat-card-content>
-                            <p>
-                            </p>
-                        </mat-card-content>
-                        <mat-card-header>
-                            <mat-card-title>Smith Machine | ₡2.000.000</mat-card-title>
-                            <mat-card-subtitle>Equipamento para Casa</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-actions>
-                            <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-          
-                        </mat-card-actions>
-                    </div>
-                </mat-grid-tile>
-                
+                  </mat-grid-tile>
 
 
 
-
-
-
-                
                 <!-- <mat-grid-tile>
-                    <mat-card class="example-card cartasFiltro">
+                    <div>
                         <div class="cartasProd">
                             <img mat-card-image src="assets/image.png" alt="Smith Machine">
                         </div>
@@ -380,15 +129,9 @@
                         </mat-card-header>
                         <mat-card-actions>
                             <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
-                            <button mat-stroked-button color="primary">Consultar</button>
                         </mat-card-actions>
-                    </mat-card>
+                    </div>
                 </mat-grid-tile> -->
-
-               
-    
-                    
-            
             </mat-grid-list>
         </div>
     </div>

@@ -24,8 +24,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 export interface ProdsData {
   id: number;
   pname: string;
+  pbrand: string;
   pdescription: string;
   pstatus: string;
+  pcategory: string;
   pprice: string;
   pstock: number;
   pimgspath:string;
@@ -78,6 +80,7 @@ export class AdminIndexComponent implements AfterViewInit {
   public chart2: any;
 
   myForm: FormGroup;
+  myForm2: FormGroup;
 
   imageUrl: any;
   logo:any;
@@ -93,8 +96,6 @@ export class AdminIndexComponent implements AfterViewInit {
     private formBuilder: FormBuilder
   ) {
 
-    
-    
 
     this.listaProductos();
     this.listaSales();
@@ -104,11 +105,20 @@ export class AdminIndexComponent implements AfterViewInit {
     this.createChart();
     this.myForm = this.formBuilder.group({
       pname: ['', Validators.required],
+      pbrand: ['', Validators.required],
       pdescription: ['', Validators.required],
       pstatus: ['', Validators.required],
+      pcategory: ['', Validators.required],
       pprice:['', Validators.required],
       pstock:['', Validators.required],
     });
+
+    this.myForm2 = this.formBuilder.group({
+      product: ['', Validators.required],
+      cantidad: [1, [Validators.required, Validators.min(1)]]
+    });
+
+    
   }
 
  
@@ -149,8 +159,10 @@ export class AdminIndexComponent implements AfterViewInit {
       const formData = new FormData();
       // const formData = this.myForm.value;
       formData.append('pname', this.myForm.value.pname);
+      formData.append('pbrand', this.myForm.value.pbrand);
       formData.append('pdescription', this.myForm.value.pdescription);
       formData.append('pstatus', this.myForm.value.pstatus);
+      formData.append('pcategory', this.myForm.value.pcategory);
       formData.append('pprice', this.myForm.value.pprice);
       formData.append('pstock', this.myForm.value.pstock);
       // formData.append('pimgspath', this.multipleImages);
@@ -159,15 +171,16 @@ export class AdminIndexComponent implements AfterViewInit {
         formData.append('pimgspath', this.multipleImages[i]);
       }
   
-
       console.log(formData);
       // const formData = this.myForm.value;
       this.gService.create('add-new-product/', formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         console.log(data);
+        this.listaProductos();
       });
-      
+
+  
     }
   }
 

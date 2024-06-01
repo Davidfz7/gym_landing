@@ -46,8 +46,10 @@ class ProductSerializer(serializers.Serializer):
 
     id           =serializers.IntegerField(required = False) 
     pname        = serializers.CharField(max_length = 255)
+    pbrand       = serializers.CharField(max_length = 255)
     pdescription = serializers.CharField()
     pstatus      = serializers.CharField()
+    pcategory    = serializers.CharField()
     pprice       = serializers.DecimalField(max_digits=10, decimal_places= 2)
     pstock       = serializers.IntegerField()
     pimgspath    = serializers.FileField(required = False, allow_null = True)

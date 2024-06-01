@@ -132,8 +132,13 @@
             <mat-form-field appearance="outline" class="inputsForm">
               <mat-label>Nombre</mat-label>
               <input matInput formControlName="pname" placeholder="Mancuerna">
-              <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
               <mat-hint>Nombre del producto</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="inputsForm">
+              <mat-label>Marca</mat-label>
+              <input matInput formControlName="pbrand" placeholder="Gympak">
+              <mat-hint>Nombre de la marca</mat-hint>
             </mat-form-field>
           
             <mat-form-field appearance="outline" class="inputsForm">
@@ -146,16 +151,27 @@
               <mat-label>Estado</mat-label>
               <mat-select formControlName="pstatus" placeholder="Disponible">
                 <mat-option value="1">Disponible</mat-option>
-                <mat-option value="2">Coming Soon</mat-option>
-                <mat-option value="3">Tiempo Limitado</mat-option>
+                <mat-option value="2">Agotado</mat-option>
+                <mat-option value="3">Proximamente</mat-option>
+                <mat-option value="4">Inactivo</mat-option>
               </mat-select>
               <mat-hint>Estado de Disponibilidad Actual</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="inputsForm">
+              <mat-label>Categoria</mat-label>
+              <mat-select formControlName="pcategory" placeholder="Maquinas">
+                <mat-option value="1">Maquinas</mat-option>
+                <mat-option value="2">Pesas Libres</mat-option>
+                <mat-option value="3">Equipos Cardiovasculares</mat-option>
+              </mat-select>
+              <mat-hint>Tipo de Equipo </mat-hint>
             </mat-form-field>
   
             <mat-form-field appearance="outline" class="inputsForm">
               <mat-label>Precio</mat-label>
-              <input matInput formControlName="pprice" placeholder="100000">
-              <mat-hint>Precio en Colones del Producto, sin puntos o comas</mat-hint>
+              <input matInput formControlName="pprice" placeholder="100000.99">
+              <mat-hint>Precio en Colones del Producto, utilizando puntos para las decimas</mat-hint>
             </mat-form-field>
   
             <mat-form-field appearance="outline" class="inputsForm">
@@ -166,7 +182,7 @@
           </div>
           <div class="rowsForm">
             <h4 style="font-weight: 400;">Imagen Del Producto</h4>
-            <div class="imagen">
+            <div class="imagen" style="max-width: 300px;">
               <div *ngFor="let imageUrl of imagesArray">
                 <img [src]="imageUrl" alt="Uploaded Image"  >
               </div>
@@ -187,17 +203,23 @@
       
     </mat-tab>
     <mat-tab label="Registrar Venta">
-      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="divForm">
+      <form [formGroup]="myForm2" (ngSubmit)="onSubmit()" class="divForm">
           <mat-form-field appearance="outline" class="inputsForm">
             <mat-label>Producto</mat-label>
-            <mat-select placeholder="Disponible">
-              <mat-option value="1">Disponible</mat-option>
-              <mat-option value="2">Coming Soon</mat-option>
-              <mat-option value="3">Tiempo Limitado</mat-option>
+            <mat-select formControlName="product" placeholder="Producto">
+              <mat-option *ngFor="let product of dataProds" [value]="product.id">
+                {{ product.pname }}
+              </mat-option>
             </mat-select>
             <mat-hint>Seleccione el Producto que se ha Vendido</mat-hint>
           </mat-form-field>
-        <button mat-flat-button color="primary" type="submit" [disabled]="!myForm.valid">Registrar Venta</button>
+          <mat-form-field appearance="outline" class="inputsForm">
+            <mat-label>Cantidad</mat-label>
+            <input matInput formControlName="cantidad" type="number" min="1" placeholder="1">
+            <mat-hint>Cantidad Vendida del Producto</mat-hint>
+          </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="!myForm2.valid">Registrar Venta</button>
       </form>
     </mat-tab>
   </mat-tab-group>

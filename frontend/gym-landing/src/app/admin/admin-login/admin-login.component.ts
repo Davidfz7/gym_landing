@@ -8,6 +8,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../share/auth.service';
+import { Router } from '@angular/router';
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -37,7 +39,7 @@ export class AdminLoginComponent {
 
   correo='';
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: [Validators.required],
       password: [Validators.required],
@@ -51,7 +53,8 @@ export class AdminLoginComponent {
       this.authService.login(email, password).subscribe(response => {
         if (this.authService.isLoggedIn()) {
           console.log('Login successful');
-          console.log(Date.now)
+          this.router.navigate(['/admin/home']);
+
         } else {
           console.log('Login failed');
         }
