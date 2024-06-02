@@ -31,7 +31,7 @@ class TokenExpiryMiddleware:
 
     def requires_auth_header(self, path_info):
         excluded_paths = ['/signup/', '/login/', '/get-product/', '/get-all-products/',
-                          '/get-imgs-names/']
+                          '/get-imgs-names/','/media/uploads/']
         return not any(path_info.startswith(path) for path in excluded_paths)
     
     def token_expired_response(self): 

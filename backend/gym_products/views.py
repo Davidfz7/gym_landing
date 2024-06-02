@@ -12,7 +12,8 @@ from .models      import Product, User, Sales
 from .serializers import ProductSerializer, CustomerSerializer, SalesSerializer
 from .utils      import  (get_all_products,filter_products, 
                            add_new_product, get_all_sales, add_new_sale,
-                           get_imgs_path, update_sale)
+                           get_imgs_path, update_sale, update_product,
+                           add_new_images)
 #----------------------------------------------
 
        
@@ -28,15 +29,17 @@ class ProductView(APIView):
         except Product.DoesNotExist:
             raise Http404
         
-    def post(self, request):
+    def post(self, request, pk = None):
         path = request.path
         if "/add-new-product/" == path:
             return add_new_product(request)
-        if "/add-new-images/"   == path:
-            return Response("Yes still working on it")
-
-    def delete(self, request, pk): 
-        return Response("Not done yet", status = status.HTTP_200_OK)
+        if f"/add-new-images/{pk}/" == path:
+            product: Product  = self.get_object(pk)
+            return add_new_images(request, str(product.id))
+         
+    def patch(self, request, pk = None):
+        product:Product = self.get_object(pk) 
+        return update_product(request, product)
 
 class ProductViewNoAuth(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)

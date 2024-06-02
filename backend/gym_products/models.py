@@ -3,8 +3,7 @@ from django.db import models
 from gym_landing.settings import MEDIA_ROOT
 # Create your models here.
 class Product(models.Model):
-
-   
+ 
     id           = models.AutoField(primary_key=True)
     pname        = models.CharField(max_length=255)
     pbrand       = models.CharField(max_length=255, null = True, blank = True)
@@ -43,9 +42,3 @@ class Sales(models.Model):
         managed = False
         db_table = 'sales'
 
-# class UploadedFile(models.Model):
-#     file = models.FileField(upload_to= 'uploads/')
-#     uploaded_on = models.DateField(auto_now = True)
-
-#     def __str__(self):
-#         return self.uploaded_on.date()
