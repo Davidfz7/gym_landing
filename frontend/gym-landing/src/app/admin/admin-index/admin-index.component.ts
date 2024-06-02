@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import Chart from 'chart.js/auto';
 
@@ -34,6 +35,13 @@ export interface ProdsData {
   pimgspath:string;
 }
 
+export interface datosSales {
+  saleid: number;
+  productid: number;
+  quantity: number;
+  date: string;
+}
+
 
 @Component({
   selector: 'app-admin-index',
@@ -51,6 +59,9 @@ export class AdminIndexComponent implements AfterViewInit {
 
   dataSource2: MatTableDataSource<any>;
   displayedColumns2: string[] = ['position', 'name', 'quantity']; // Ajusta las columnas que deseas mostrar
+
+  displayedColumns3: string[] = ['productid', 'quantity', 'date'];
+  dataSource3: MatTableDataSource<datosSales>;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -82,6 +93,10 @@ export class AdminIndexComponent implements AfterViewInit {
   logo:any;
   multipleImages:any;
   imagesArray:any;
+
+  showPaginator = false;
+  pageSize = 10;
+  pageIndex = 0;
   
 
 
@@ -151,11 +166,19 @@ export class AdminIndexComponent implements AfterViewInit {
         this.datosSales=data;
         console.log(this.datosSales);
 
+        this.dataSource3 = new MatTableDataSource(this.datosSales);
+        this.dataSource3.paginator = this.paginator;
+        this.dataSource3.sort = this.sort;
+
+        if (this.chart) {
+          this.chart.destroy();
+          this.chart2.destroy();
+        }
+
         this.prepareChartData();
         this.prepareDoughnutChartData();
         this.createChart();
 
-        
   
         this.loadSoldProds();
 
@@ -499,5 +522,7 @@ export class AdminIndexComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+
 }
 

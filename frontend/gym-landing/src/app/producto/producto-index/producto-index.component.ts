@@ -42,6 +42,10 @@ export class ProductoIndexComponent {
   datos:any;
   destroy$:Subject<boolean>=new Subject<boolean>();
 
+  datosImgs: any;
+  datosComb:any;
+  baseUrl: string = 'http://127.0.0.1:8000';
+
   constructor(private gService:GenericService,
     private router:Router,
     private route:ActivatedRoute,
@@ -49,7 +53,7 @@ export class ProductoIndexComponent {
     private sanitizer: DomSanitizer
     ){
       this.listaProductos();
-
+      this.listaImagenes();
     }
 
   ngOnInit(): void {
@@ -62,6 +66,33 @@ export class ProductoIndexComponent {
       .subscribe((data:any)=>{
         this.datos=data;
         console.log(this.datos);
+      });
+  }
+
+  listaImagenes(){
+    this.gService.list('get-imgs-names/')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data:any)=>{
+        this.datosImgs=data;
+        console.log(this.datosImgs);
+
+
+
+
+
+        this.datosComb = this.datos.map(product => {
+          const imageData = this.datosImgs.find(image => image.id === product.id);
+          if (imageData) {
+            console.log(product);
+            return {
+              ...product,
+              imgUrl: imageData.imgs_list.length ? `${this.baseUrl}${product.pimgspath}${imageData.imgs_list[0]}` : null
+            };
+          }
+          return product;
+        });
+        console.log("datos:" );
+        console.log(this.datosComb);
       });
   }
 
