@@ -64,7 +64,7 @@ class ProductSerializer(serializers.Serializer):
         instance.save()
         return instance
 class UpdateProductSerializer(serializers.Serializer):
-    id           =serializers.IntegerField() 
+    id           =serializers.IntegerField(required = False) 
     pname        = serializers.CharField(max_length = 255, required = False)
     pbrand       = serializers.CharField(max_length = 255, required = False)
     pdescription = serializers.CharField(required = False)
@@ -82,12 +82,15 @@ class UpdateProductSerializer(serializers.Serializer):
         instance.pcategory    = validate_data.get('pcategory')
         instance.pprice       = validate_data.get('pprice')
         instance.pstock       = validate_data.get('pstock')
+        instance.save()
+        return instance 
  
 class ImgSerializer(serializers.Serializer):
     id         = serializers.IntegerField(required = False)
     pname      = serializers.CharField(required = False) 
     pimgspath  = serializers.CharField(required = False)
-    imgs_list  = serializers.ListField()
+    imgs_list  = serializers.ListField(required = False)
+    new_imgs   = serializers.FileField(required = False)
 
 class SalesSerializer(serializers.Serializer):
     saleid    = serializers.IntegerField(required = False)
@@ -117,5 +120,5 @@ class UpdateSalesSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-
+ 
         

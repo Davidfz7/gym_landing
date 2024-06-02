@@ -49,6 +49,7 @@ def signup(request):
         token = Token.objects.create(user = user)
         return Response({"token": token.key, "user": UserSerializer(instance = user).data}, status= status.HTTP_200_OK)
     return Response("Couldnt create the user:)", status= status.HTTP_400_BAD_REQUEST) 
+
 def login(request, format = None):
    user = get_object_or_404(User, username = request.data['username'])
    if not user.check_password(request.data['password']):

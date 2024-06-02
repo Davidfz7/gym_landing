@@ -1,7 +1,9 @@
 import jsonschema.exceptions
 from gym_landing.settings       import MEDIA_ROOT
 from .models                    import Product, Sales
-from .serializers               import ProductSerializer, SalesSerializer, ImgSerializer, UpdateSalesSerializer 
+from .serializers               import (ProductSerializer, SalesSerializer,
+                                        ImgSerializer, UpdateSalesSerializer,
+                                        UpdateProductSerializer) 
 from rest_framework.response    import Response 
 from rest_framework             import status 
 from itertools                  import zip_longest
@@ -228,25 +230,7 @@ def get_all_sales():
     serializer = SalesSerializer(query, many = True)
     return serializer.data
 
-def modify_files_name(directory_id:str):
-    files_path = os.path.join(os.getcwd(), "media", "uploads", directory_id)
-    exists     = os.path.exists(files_path)
-    print(files_path)
-    if not exists:
-        return "No existing path"
-    count = 1
-    for file in os.listdir(files_path):
-        file_split = file.split(".")
-        print(file_split)
-        old_name   = os.path.join(files_path, file)
-        new_name   = os.path.join(files_path, f"img{str(count)}.{file_split[1]}") 
-        if os.path.isfile(new_name):
-            count += 1
-            print("Entre aqui para hacer el continue xD")
-            continue
-        os.rename(old_name, new_name)
-        count    += 1 
-    return "All file names updated"
+
     
 def add_new_sale(request):
     serializer = SalesSerializer(data = request.data) 
@@ -296,3 +280,71 @@ def update_sale(request, instance: Sales):
         return Response(SalesSerializer(instance = updated_sale).data,
                         status= status.HTTP_200_OK)
     return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+
+def update_product(request, instance: Product):
+    required_keys = ['pname', 'pbrand', 'pdescription', 'pstatus',
+                    'pcategory','pprice', 'pstock']
+    values_in_instance = [instance.pname, instance.pbrand, instance.pdescription,
+                          instance.pstatus, instance.pcategory, instance.pprice,
+                          instance.pstock]
+    data_dict:dict = request.data
+    count_a = 0
+    count_b = 0
+    for key in required_keys:
+        if key not in data_dict.keys():
+            count_a += 1
+            if values_in_instance[count_b] is None:
+                count_b += 1 
+                continue
+            data_dict.update({key: values_in_instance[count_b]})
+        count_b += 1
+    if count_a == len(required_keys):
+        return Response({"error": "Need a field name to update or not a valid field name"}, 
+                        status = status.HTTP_400_BAD_REQUEST)
+   
+    serializer = UpdateProductSerializer(data = request.data) 
+    if serializer.is_valid():
+        updated_product = serializer.update(instance, serializer.validated_data)
+        return Response(UpdateProductSerializer(instance = updated_product).data,
+                        status = status.HTTP_200_OK) 
+    return Response(serializer.errors, status = status.HTTP_200_OK)
+
+def add_new_images(request, directory_id:str):
+    if request.data.get('new_imgs') is None:
+        return Response({"error": "Field 'new_imgs' required"}, status= status.HTTP_400_BAD_REQUEST)
+    files_path = os.path.join(os.getcwd(), "media", "uploads", directory_id)
+    exists     = os.path.exists(files_path)
+    serializer = ImgSerializer(data = request.data)
+    if not exists:
+        return Response({"info": "directory does not exist"})
+    if serializer.is_valid():   
+        files:list = request.FILES.getlist('new_imgs') 
+        for file in files:
+            file_path  = os.path.join(files_path, str(file)) 
+            with open(file_path, 'wb') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)  
+        modify_files_name(directory_id) 
+        return Response({"info": "new images successfully added"}, status = status.HTTP_200_OK) 
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+def modify_files_name(directory_id:str):
+    print("Estoy llegando aqui?")
+    files_path = os.path.join(os.getcwd(), "media", "uploads", directory_id)
+    exists     = os.path.exists(files_path)
+    print(files_path)
+    if not exists:
+        return "No existing path"
+    count = 1
+    for file in os.listdir(files_path):
+        file_split = file.split(".")
+        print(file_split)
+        old_name   = os.path.join(files_path, file)
+        new_name   = os.path.join(files_path, f"img{str(count)}.{file_split[1]}") 
+        if os.path.isfile(new_name):
+            count += 1
+            print("Entre aqui para hacer el continue xD")
+            continue
+        os.rename(old_name, new_name)
+        count    += 1 
+    return "All file names updated"
