@@ -39,6 +39,9 @@ export class ProductoIndexComponent {
   thumbLabel = false;
   value2 = 0;
 
+  filteredProducts = [];  // Lista filtrada de productos
+  searchValue: string = '';
+
   datos:any;
   destroy$:Subject<boolean>=new Subject<boolean>();
 
@@ -66,7 +69,28 @@ export class ProductoIndexComponent {
       .subscribe((data:any)=>{
         this.datos=data;
         console.log(this.datos);
+        this.filteredProducts = data;
       });
+  }
+
+  onSearchChange(): void {
+    this.filterProducts();
+    // console.log(this.filterProducts())
+  }
+
+  onPriceChange(): void {
+    this.filterProducts();
+  }
+
+
+  filterProducts(): void {
+    this.filteredProducts = this.datosComb.filter(product => {
+      const matchesSearch = product.pname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+                            product.pdescription.toLowerCase().includes(this.searchValue.toLowerCase());
+      const withinPriceRange = product.pprice >= this.min && product.pprice <= this.max;
+      console.log(matchesSearch)
+      return matchesSearch && withinPriceRange;
+    });
   }
 
   listaImagenes(){
@@ -75,10 +99,6 @@ export class ProductoIndexComponent {
       .subscribe((data:any)=>{
         this.datosImgs=data;
         console.log(this.datosImgs);
-
-
-
-
 
         this.datosComb = this.datos.map(product => {
           const imageData = this.datosImgs.find(image => image.id === product.id);
