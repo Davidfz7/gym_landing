@@ -1,9 +1,10 @@
 import jsonschema.exceptions
 from gym_landing.settings       import MEDIA_ROOT
-from .models                    import Product, Sales
+from .models                    import Product, Sales, Customer
 from .serializers               import (ProductSerializer, SalesSerializer,
                                         ImgSerializer, UpdateSalesSerializer,
-                                        UpdateProductSerializer) 
+                                        UpdateProductSerializer, CustomerSerializer,
+                                        UpdateCustomerSerializer) 
 from rest_framework.response    import Response 
 from rest_framework             import status 
 from itertools                  import zip_longest
@@ -348,3 +349,49 @@ def modify_files_name(directory_id:str):
         os.rename(old_name, new_name)
         count    += 1 
     return "All file names updated"
+
+
+def add_customer(request):
+    customer_data:dict = request.data 
+    serializer:CustomerSerializer = CustomerSerializer(data = customer_data)
+    if serializer.is_valid():
+        new_customer:Customer = serializer.create(serializer.validated_data) 
+        return Response(CustomerSerializer(instance = new_customer).data, 
+                        status = status.HTTP_200_OK)
+    return Response(serializer.errors, status = status.HTTP_200_OK)
+def get_all_customers():
+    try:
+        all_customers = Customer.objects.all()
+        serializer = CustomerSerializer(instance = all_customers, many = True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    except Customer.DoesNotExist:
+        return Response({'error': 'Customers not found'}, 
+                        status = status.HTTP_404_NOT_FOUND)
+    
+def update_customer(instance: Customer, request):
+    required_keys = ['cname', 'cphone', 'cemail', 'cdate']
+    values_in_instance = [instance.cname, instance.cphone,
+                           instance.cemail, str(instance.cdate)]
+    data_dict:dict = request.data
+    count_a = 0
+    count_b = 0
+    for key in required_keys:
+        if key not in data_dict.keys():
+            count_a += 1
+            if values_in_instance[count_b] is None:
+                count_b += 1 
+                continue
+            data_dict.update({key: values_in_instance[count_b]})
+        count_b += 1
+    if count_a == len(required_keys):
+        return Response({"error": "Need a field name to update or not a valid field name"}, 
+                        status = status.HTTP_400_BAD_REQUEST)
+   
+    serializer = UpdateCustomerSerializer(data = request.data) 
+    if serializer.is_valid():
+        updated_product = serializer.update(instance, serializer.validated_data)
+        return Response(UpdateCustomerSerializer(instance = updated_product).data,
+                        status = status.HTTP_200_OK) 
+    return Response(serializer.errors, status = status.HTTP_200_OK)
+    
+    

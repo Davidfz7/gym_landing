@@ -3,7 +3,6 @@ from django.db import models
 from gym_landing.settings import MEDIA_ROOT
 # Create your models here.
 class Product(models.Model):
- 
     id           = models.AutoField(primary_key=True)
     pname        = models.CharField(max_length=255)
     pbrand       = models.CharField(max_length=255, null = True, blank = True)
@@ -22,15 +21,16 @@ class Product(models.Model):
                      "pdescription": self.pdescription,
                      "pprice": self.pprice, "pstock": self.pstock})      
           
-class User(models.Model):
-    userid = models.AutoField(primary_key=True)
-    uname  = models.CharField(max_length=255)
-    uphone = models.CharField(max_length=20)
-    uemail = models.CharField(unique=True, max_length=255)
-    udate  = models.DateField(auto_now = True) 
-    class Meta:
-        db_table = 'user'
+class Customer(models.Model):
+    cid = models.AutoField(primary_key=True)
+    cname = models.CharField(max_length=255)
+    cphone = models.CharField(max_length=20)
+    cemail = models.CharField(unique=True, max_length=255)
+    cdate = models.DateField()
 
+    class Meta:
+        managed = False
+        db_table = 'customer'
 
 class Sales(models.Model):
     saleid = models.AutoField(primary_key=True)
@@ -41,4 +41,14 @@ class Sales(models.Model):
     class Meta:
         managed = False
         db_table = 'sales'
+
+
+class Shoppingcart(models.Model):
+    cart_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey(Customer, models.DO_NOTHING, blank=True, null=True)
+    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'shoppingcart'
 

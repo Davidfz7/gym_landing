@@ -1,47 +1,5 @@
-from gym_products.models import Product, User, Sales
+from gym_products.models import Product, Customer, Sales
 from rest_framework import serializers
-# #First way to serialize data#
-# class ProductsSerializerV1(serializers.Serializer):
-#     id = serializers.IntegerField(read_only=True)
-#     pname = serializers.CharField(max_length=254)
-#     pdescription = serializers.CharField(max_length=254, allow_blank=True, required=False)
-#     pprice = serializers.DecimalField(max_digits=9, decimal_places=2)
-#     pstock = serializers.IntegerField()
-
-#     def create(self, validated_data):
-#         return Products.objects.create(**validated_data)
-    
-#     def update(self, instance, validated_data):
-#         instance.pname = validated_data.get('pname', instance.pname)
-#         instance.pdescription = validated_data.get('pdescription', instance.pdescription)
-#         instance.pprice = validated_data.get('pprice', instance.pprice)
-#         instance.pstock = validated_data.get('pstock', instance.pstock)
-#         instance.save()
-#         return instance
-
-# #Second way to serialize data#
-# class ProductsSerializerV2(serializers.ModelSerializer):
-#     class Meta:
-#         model  = Products
-#         fields = ['id', 'pname', 'pdescription', 'pprice', 'pstock']
-#Third way to serialize data#
-# class ProductSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model  = Product
-#         fields = ('id', 'pname', 'pdescription', 'pprice', 'pstock', 'pimgpath')
-
-
-class CustomerSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta: 
-        model  = User
-        fields = ('userid', 'uname', 'uphone', 'uemail') 
-
-# class FileUploadSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta: 
-#         model  = UploadedFile
-#         fields = ('file', 'uploaded_on',) 
-
-
 class ProductSerializer(serializers.Serializer):
 
     id           =serializers.IntegerField(required = False) 
@@ -91,6 +49,31 @@ class ImgSerializer(serializers.Serializer):
     pimgspath  = serializers.CharField(required = False)
     imgs_list  = serializers.ListField(required = False)
     new_imgs   = serializers.FileField(required = False)
+
+class CustomerSerializer(serializers.Serializer):
+    cid = serializers.IntegerField(read_only=True)
+    cname = serializers.CharField(max_length=255)
+    cphone = serializers.CharField(max_length=20)
+    cemail = serializers.EmailField(max_length=255)
+    cdate = serializers.DateField()
+
+    def create(self, validated_data):
+        return Customer.objects.create(**validated_data)
+
+class UpdateCustomerSerializer(serializers.Serializer):
+    cid = serializers.IntegerField(read_only=True, required = False)
+    cname = serializers.CharField(max_length=255, required = False)
+    cphone = serializers.CharField(max_length=20, required = False)
+    cemail = serializers.EmailField(max_length=255,required = False )
+    cdate = serializers.DateField(required = False)
+    def update(self, instance:Customer, validate_data: dict):
+        instance.cname        = validate_data.get('cname')
+        instance.cphone       = validate_data.get('cphone')
+        instance.cemail       = validate_data.get('cemail')
+        instance.cdate        = validate_data.get('cdate')
+        instance.save()
+        return instance 
+      
 
 class SalesSerializer(serializers.Serializer):
     saleid    = serializers.IntegerField(required = False)
