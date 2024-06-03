@@ -10,21 +10,21 @@ CREATE TABLE product (
     pname VARCHAR(255) UNIQUE NOT NULL,
     pbrand VARCHAR(255),
     pdescription TEXT,
-    pstatus ENUM("disponible", "agotado", "proximamente", "inactivo") NOT NULL,
-    pcategory ENUM("maquinas", "pesas libres", "equipos cardiovasculares") NOT NULL,
+    pstatus ENUM("DISPONIBLE", "AGOTADO", "PROXIMAMENTE", "INACTIVO") NOT NULL,
+    pcategory ENUM("MAQUINAS", "PESAS LIBRES", "EQUIPOS CARDIOVASCULARES") NOT NULL,
     pprice DECIMAL(10, 2) NOT NULL,
     pstock INT NOT NULL,
     pimgspath  VARCHAR(100) UNIQUE
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
-DROP TABLE IF EXISTS user;
-CREATE TABLE user (
-    userid INT PRIMARY KEY AUTO_INCREMENT,
-    uname VARCHAR(255) NOT NULL,
-    uphone VARCHAR(20) NOT NULL,
-    uemail VARCHAR(255) UNIQUE NOT NULL,
-    udate DATE NOT NULL
+DROP TABLE IF EXISTS customer;
+CREATE TABLE customer (
+    cid INT PRIMARY KEY AUTO_INCREMENT,
+    cname VARCHAR(255) NOT NULL,
+    cphone VARCHAR(20) NOT NULL,
+    cemail VARCHAR(255) UNIQUE NOT NULL,
+    cdate DATE NOT NULL
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -38,12 +38,27 @@ CREATE TABLE sales (
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
+DROP TABLE IF EXISTS shoppingcart;
+CREATE TABLE shoppingcart(
+    cart_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    product_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customer(cid),
+    FOREIGN KEY (product_id) REFERENCES product(id)
+)ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
 
-INSERT INTO product (pname, pdescription, pstatus, pcategory, pprice, pstock) VALUES
-    ('Treadmill', 'Powerful motorized treadmill for home use', 'disponible', 'maquinas', 999.99, 20);
-
+INSERT INTO product (pname, pbrand, pdescription, pstatus, pcategory, pprice, pstock) VALUES
+    ('Treadmill', 'Nike', 'Powerful motorized treadmill for home use', 'DISPONIBLE', 'MAQUINAS', 999.99, 20),
+    ('Dumbells', 'Adidas', 'Powerful Dumbells', 'DISPONIBLE', 'MAQUINAS', 999.99, 20);
 INSERT INTO sales (productid, quantity, date) VALUES
     (1, 5, '2024-05-07');
+INSERT INTO customer(cname, cphone, cemail, cdate) VALUES
+    ('Customer1', '8888-8888', 'customer1@gmail.com', '2022-03-21');
+
+INSERT INTO shoppingcart(customer_id, product_id) VALUES
+    (1, 1),
+    (1, 2);
 -- INSERT INTO user (uname, uphone, uemail, udate) VALUES 
 --     ('John Doe', '123-456-7890', 'john@example.com', '2022-03-21'),
 --     ('Alice Smith', '987-654-3210', 'alice@example.com', '2022-03-21'),
