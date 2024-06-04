@@ -25,12 +25,25 @@
     
     <div class="container">
         <div class="sidebar child">
-          <mat-form-field class="example-form-field buscar" appearance="outline" style="margin-top: 16px;">
+          <!-- <mat-form-field class="example-form-field buscar" appearance="outline" style="margin-top: 16px;">
             <mat-label>Buscar Productos</mat-label>
             <input matInput type="text" [(ngModel)]="searchValue" (ngModelChange)="onSearchChange()">
             <button matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''; onSearchChange()">
+            <input matInput type="text" [(ngModel)]="searchValue">
+            <button matSuffix mat-icon-button aria-label="Clear">
               <mat-icon>close</mat-icon>
             </button>
+          </mat-form-field> -->
+
+          <mat-form-field class="example-form-field buscar" appearance="outline" style="margin-top: 16px;"> 
+            <!-- Quitar el appearance="outline"  -->
+            <mat-label>Buscar Productos</mat-label>
+            <input matInput type="text" [(ngModel)]="value">
+            @if (value) {
+              <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            }
           </mat-form-field>
               <mat-divider></mat-divider>
               <br>
@@ -41,16 +54,33 @@
                   <h3 class="example-h2">Rango de Precios</h3>
                   <div class="example-label-container">
                     <label id="example-name-label" class="example-name-label">Minimo:</label>
-                    <label class="example-value-label">{{min}}</label>
+                    <label class="example-value-label">{{slider.value}}</label>
                     <label id="example-name-label" class="example-name-label">Maximo:</label>
-                    <label class="example-value-label">{{max}}</label>
+                    <label class="example-value-label">{{slider2.value}}</label>
                   </div>
                   <mat-slider min="0" max="5000000" [(ngModel)]="min" (ngModelChange)="onPriceChange()" thumbLabel>
                   </mat-slider>
                   <mat-slider min="0" max="5000000" [(ngModel)]="max" (ngModelChange)="onPriceChange()" thumbLabel>
                   </mat-slider>
+    
                 </mat-card-content>
               </mat-card> -->
+
+              <mat-card class="cartasFiltro">
+                <mat-card-content>
+                  <h3 class="example-h2">Rango de Precios</h3>
+                  <div class="example-label-container">
+                    <label id="example-name-label" class="example-name-label">Minimo:</label>
+                    <label class="example-value-label">{{slider.value}}</label>
+                    <label id="example-name-label" class="example-name-label">Maximo:</label>
+                    <label class="example-value-label">{{slider2.value}}</label>
+                  </div>
+                  <mat-slider min="0" max="5000000" [step]="step" [discrete]="thumbLabel">  
+                    <input [(ngModel)]="min" #slider matSliderStartThumb>
+                    <input [(ngModel)]="max" #slider2 matSliderEndThumb>
+                  </mat-slider>
+                </mat-card-content>
+              </mat-card>
 
               <br>
               <mat-divider></mat-divider>
@@ -90,8 +120,23 @@
     
         </div>
         <div class="main child">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let product of datosComb">
+                <div class="card mb-4">
+                  <img *ngIf="product.imgUrl" [src]="product.imgUrl" class="card-img-top" [alt]="product.pname">
+                  <div class="card-body cartasProd">
+                    <h5 class="card-title">{{ product.pname }} | ₡{{ product.pprice }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ product.pcategory }}</h6>
+                    <button class="btn btn-primary" (click)="viewProduct(product.id)">Ver Más</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
             
-            <mat-grid-list [cols]="4" rowHeight="450px" gutterSize="1px">
+            <!-- <mat-grid-list [cols]="4" rowHeight="450px" gutterSize="1px">
 
               <mat-grid-tile *ngFor="let product of datosComb">
                 <div>
@@ -99,18 +144,18 @@
                     <img mat-card-image *ngIf="product.imgUrl" [src]="product.imgUrl" alt="{{ product.pname }}">
                   </div>
                   <mat-card-content>
-                    <p>{{ product.pdescription }}</p>
+                  
                   </mat-card-content>
                   <mat-card-header>
                     <mat-card-title>{{ product.pname }} | ₡{{ product.pprice }}</mat-card-title>
                     <mat-card-subtitle>{{ product.pcategory }}</mat-card-subtitle>
                   </mat-card-header>
                   <mat-card-actions>
-                    <button mat-stroked-button color="primary" class="btnVer">Ver Mas</button>
+                    <button mat-stroked-button color="primary" class="btnVer" (click)="viewProduct(product.id)">Ver Mas</button>
                   </mat-card-actions>
                 </div>
               </mat-grid-tile>
-            </mat-grid-list>
+            </mat-grid-list> -->
         </div>
     </div>
 

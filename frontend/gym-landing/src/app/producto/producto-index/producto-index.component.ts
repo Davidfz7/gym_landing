@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-producto-index',
@@ -47,7 +48,7 @@ export class ProductoIndexComponent {
 
   datosImgs: any;
   datosComb:any;
-  baseUrl: string = 'http://127.0.0.1:8000';
+  baseUrl: string = environment.apiURL;
 
   constructor(private gService:GenericService,
     private router:Router,
@@ -56,7 +57,7 @@ export class ProductoIndexComponent {
     private sanitizer: DomSanitizer
     ){
       this.listaProductos();
-      this.listaImagenes();
+      
     }
 
   ngOnInit(): void {
@@ -69,29 +70,34 @@ export class ProductoIndexComponent {
       .subscribe((data:any)=>{
         this.datos=data;
         console.log(this.datos);
-        this.filteredProducts = data;
+        // this.filteredProducts = data;
+        this.listaImagenes();
       });
   }
 
-  onSearchChange(): void {
-    this.filterProducts();
-    // console.log(this.filterProducts())
+  viewProduct(productId: number) {
+    this.router.navigate(['/product', productId]);
   }
 
-  onPriceChange(): void {
-    this.filterProducts();
-  }
+  // onSearchChange(): void {
+  //   this.filterProducts();
+  //   // console.log(this.filterProducts())
+  // }
+
+  // onPriceChange(): void {
+  //   this.filterProducts();
+  // }
 
 
-  filterProducts(): void {
-    this.filteredProducts = this.datosComb.filter(product => {
-      const matchesSearch = product.pname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-                            product.pdescription.toLowerCase().includes(this.searchValue.toLowerCase());
-      const withinPriceRange = product.pprice >= this.min && product.pprice <= this.max;
-      console.log(matchesSearch)
-      return matchesSearch && withinPriceRange;
-    });
-  }
+  // filterProducts(): void {
+  //   this.filteredProducts = this.datosComb.filter(product => {
+  //     const matchesSearch = product.pname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+  //                           product.pdescription.toLowerCase().includes(this.searchValue.toLowerCase());
+  //     const withinPriceRange = product.pprice >= this.min && product.pprice <= this.max;
+  //     console.log(matchesSearch)
+  //     return matchesSearch && withinPriceRange;
+  //   });
+  // }
 
   listaImagenes(){
     this.gService.list('get-imgs-names/')

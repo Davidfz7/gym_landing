@@ -15,4 +15,7 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   navMenu:any;
+  navMenu2:any;
+  navMenu3:any;
+  navMenu4:any;
 }

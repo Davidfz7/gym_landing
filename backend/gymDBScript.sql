@@ -10,8 +10,8 @@ CREATE TABLE product (
     pname VARCHAR(255) UNIQUE NOT NULL,
     pbrand VARCHAR(255),
     pdescription TEXT,
-    pstatus ENUM("DISPONIBLE", "AGOTADO", "PROXIMAMENTE", "INACTIVO") NOT NULL,
-    pcategory ENUM("MAQUINAS", "PESAS LIBRES", "EQUIPOS CARDIOVASCULARES") NOT NULL,
+    pstatus ENUM("Disponible", "Agotado", "Proximamente", "Inactivo") NOT NULL,
+    pcategory ENUM("Maquinas", "Pesas Libres", "Equipos Cardiovasculares") NOT NULL,
     pprice DECIMAL(10, 2) NOT NULL,
     pstock INT NOT NULL,
     pimgspath  VARCHAR(100) UNIQUE

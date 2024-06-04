@@ -5,46 +5,30 @@
     <div class="menuNav">
         <button mat-button [matMenuTriggerFor]="navMenu">Productos</button>
         <mat-menu #navMenu="matMenu">
-            <button mat-menu-item [routerLink]="'/avisos'">
-                <mat-icon>room_preferences</mat-icon>
-                <span>Maquinas</span>
-            </button>
-            <button mat-menu-item [routerLink]="'/encuestas'">
+            <button mat-menu-item [routerLink]="'/productos'">
                 <mat-icon>fitness_center</mat-icon>
-                <span>Pesas</span>
+                <span>Todos los Productos</span>
             </button>
         </mat-menu>
-        <button mat-button [matMenuTriggerFor]="navMenu">Descuentos</button>
-        <mat-menu #navMenu="matMenu">
-            <button mat-menu-item [routerLink]="'/avisos'">
-                <mat-icon>feed</mat-icon>
-                <span>Avisos</span>
-            </button>
-            <button mat-menu-item [routerLink]="'/encuestas'">
-                <mat-icon>quiz</mat-icon>
-                <span>Encuestas</span>
+        <button mat-button [matMenuTriggerFor]="navMenu2">Pesas</button>
+        <mat-menu #navMenu2="matMenu">
+            <button mat-menu-item [routerLink]="'/productos/pesas'">
+                <mat-icon>fitness_center</mat-icon>
+                <span>Pesos Libres</span>
             </button>
         </mat-menu>
-        <button mat-button [matMenuTriggerFor]="navMenu">Nuevos Ingresos</button>
-        <mat-menu #navMenu="matMenu">
-            <button mat-menu-item [routerLink]="'/avisos'">
-                <mat-icon>feed</mat-icon>
-                <span>Avisos</span>
-            </button>
-            <button mat-menu-item [routerLink]="'/encuestas'">
-                <mat-icon>quiz</mat-icon>
-                <span>Encuestas</span>
+        <button mat-button [matMenuTriggerFor]="navMenu3">Maquinas</button>
+        <mat-menu #navMenu3="matMenu">
+            <button mat-menu-item [routerLink]="'/productos/maquinas'">
+                <mat-icon>room_preferences</mat-icon>
+                <span>Maquinas de Smith</span>
             </button>
         </mat-menu>
-        <button mat-button [matMenuTriggerFor]="navMenu">Destacados</button>
-        <mat-menu #navMenu="matMenu">
-            <button mat-menu-item [routerLink]="'/avisos'">
-                <mat-icon>feed</mat-icon>
-                <span>Avisos</span>
-            </button>
-            <button mat-menu-item [routerLink]="'/encuestas'">
-                <mat-icon>quiz</mat-icon>
-                <span>Encuestas</span>
+        <button mat-button [matMenuTriggerFor]="navMenu4">Equipos</button>
+        <mat-menu #navMenu4="matMenu">
+            <button mat-menu-item [routerLink]="'/productos/equipos'">
+                <mat-icon>sports_gymnastics</mat-icon>
+                <span>Cardiovasculares</span>
             </button>
         </mat-menu>
     </div>

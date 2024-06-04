@@ -1,3 +1,41 @@
 <div>
-    
+    <div class="mainDiv">
+        <mat-card class="cartaInfo">
+            <mat-card-content>
+                  <div *ngIf="product" class="product-detail-container">
+                    <!-- Product Information -->
+                    <div class="product-info">
+                        <h1 class="titulo">{{ product.pname }}</h1>
+                        
+                        <p>Marca: {{ product.pbrand }}</p>
+                        <p>Disponibilidad: {{ product.pstatus }}</p>
+                        <p>Precio: ₡{{ product.pprice }}</p>
+                        <p>Tipo: {{ product.pcategory }}</p>
+                        <p>Cantidad Disponible: {{ product.pstock }}</p>
+                        <mat-divider></mat-divider>
+                        <br>
+                        <p>{{ product.pdescription }}</p>
+                    </div>
+                  
+                    <!-- Image Carousel -->
+                    <div class="image-carousel">
+                      <c-carousel [interval]="3000" transition="crossfade">
+                        <c-carousel-inner>
+                          <c-carousel-item *ngFor="let imgUrl of productImages; let i = index" [active]="i === 0">
+                            <img [src]="imgUrl" class="d-block w-100" alt="{{ product.pname }}" loading="lazy">
+                          </c-carousel-item>
+                        </c-carousel-inner>
+                        <c-carousel-indicators></c-carousel-indicators>
+                        <c-carousel-control [routerLink] direction="prev"><mat-icon>arrow_back_ios</mat-icon></c-carousel-control>
+                        <c-carousel-control [routerLink] direction="next"><mat-icon>arrow_forward_ios</mat-icon></c-carousel-control>
+                        <!-- <c-carousel-indicators [items]="productImages"></c-carousel-indicators> -->
+                      </c-carousel>
+                    </div>
+                  </div>
+                  <mat-card-actions>
+                    <button mat-stroked-button color="primary" class="btnVer" [routerLink]="'/productos'">Retornar</button>
+                  </mat-card-actions>
+            </mat-card-content>
+          </mat-card> 
+    </div>
 </div>

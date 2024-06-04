@@ -7,9 +7,21 @@ import { AdminIndexComponent } from './admin/admin-index/admin-index.component';
 import { AvisosIndexComponent } from './avisos/avisos-index/avisos-index.component';
 import { CanActivateFn } from '@angular/router';
 import { authGuard } from './share/guards/auth.guard';
+import { ProductoPesasComponent } from './producto/producto-pesas/producto-pesas.component';
+import { ProductoEquiposComponent } from './producto/producto-equipos/producto-equipos.component';
+import { ProductoMaquinasComponent } from './producto/producto-maquinas/producto-maquinas.component';
+import { ProductoDetailComponent } from './producto/producto-detail/producto-detail.component';
+import { ProductoHomeComponent } from './producto/producto-home/producto-home.component';
 
 export const routes: Routes = [
     { path:'productos', component: ProductoIndexComponent},
+    { path:'productos/home', component: ProductoHomeComponent},
+    { path:'productos/pesas', component: ProductoPesasComponent},
+    { path:'productos/equipos', component: ProductoEquiposComponent},
+    { path:'productos/maquinas', component: ProductoMaquinasComponent},
+    { path: 'product/:id', component: ProductoDetailComponent },
+
+
     { path:'inicio', component: InicioComponent},
 
     { path:'avisos', component: AvisosIndexComponent},
@@ -22,6 +34,6 @@ export const routes: Routes = [
     //     canActivate: [authGuard],
     // },
 
-    { path:'', redirectTo:'/inicio' ,pathMatch:'full'},
+    { path:'', redirectTo:'/productos' ,pathMatch:'full'},
     { path:'**',component:PageNotFoundComponent},
 ];

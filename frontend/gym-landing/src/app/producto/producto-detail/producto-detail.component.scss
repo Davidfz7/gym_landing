@@ -1,0 +1,29 @@
+@import "@coreui/coreui/scss/coreui";
+ c-carousel{
+    max-width: 400px;
+ }
+
+ .cartaInfo{
+    margin: 0 auto;
+    width: 70%;
+ }
+
+ .product-detail-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .product-info {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .image-carousel {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .titulo{
+    color:white;
+    
+  }
