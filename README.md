@@ -24,4 +24,5 @@ requests-toolbelt==1.0.0
 rich==13.7.1
 sqlparse==0.4.4
 typing_extensions==4.10.0
+
 urllib3==2.2.1
