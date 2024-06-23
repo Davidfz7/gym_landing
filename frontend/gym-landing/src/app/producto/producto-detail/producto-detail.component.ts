@@ -2,7 +2,7 @@ import {MatCardModule} from '@angular/material/card';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from '../../share/generic.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';

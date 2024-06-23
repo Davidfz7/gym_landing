@@ -23,7 +23,7 @@ import Chart from 'chart.js/auto';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from '../../share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../share/auth.service';
 
@@ -51,7 +51,7 @@ export interface datosSales {
   selector: 'app-admin-index',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatRippleModule, MatTabsModule, MatGridListModule, MatCardModule,
-    ReactiveFormsModule,MatButtonModule,MatSelectModule, HttpClientModule,CommonModule,MatIconModule, RouterLink
+    ReactiveFormsModule,MatButtonModule,MatSelectModule, CommonModule,MatIconModule, RouterLink
   ],
   templateUrl: './admin-index.component.html',
   styleUrl: './admin-index.component.scss'
@@ -335,7 +335,7 @@ export class AdminIndexComponent implements AfterViewInit {
   }
 
   calculosData(){
-    
+
   }
 
 
