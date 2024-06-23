@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    # 'admin_hub.middleware.TokenExpiryMiddleware'
     'admin_hub.middleware.TokenExpiryMiddleware',
     'corsheaders.middleware.CorsMiddleware'
 ]

@@ -4,7 +4,7 @@ backend/venv
 venv
 backend\gym_landing\gym_landing\__pycache__
 backend\gym_landing\gym_products\__pycache__
-
+all_endpoints.txt
 __pycache__/
 uploads/
 backend/gym_landing/gym_landing/__pycache__/
