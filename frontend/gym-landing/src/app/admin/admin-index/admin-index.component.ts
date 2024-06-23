@@ -13,6 +13,10 @@ import {MatSelectModule} from '@angular/material/select';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
+import { routes } from '../../app.routes';
+import { RouterLink } from '@angular/router';
+
 
 import Chart from 'chart.js/auto';
 
@@ -47,7 +51,7 @@ export interface datosSales {
   selector: 'app-admin-index',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatRippleModule, MatTabsModule, MatGridListModule, MatCardModule,
-    ReactiveFormsModule,MatButtonModule,MatSelectModule, HttpClientModule,CommonModule,
+    ReactiveFormsModule,MatButtonModule,MatSelectModule, HttpClientModule,CommonModule,MatIconModule, RouterLink
   ],
   templateUrl: './admin-index.component.html',
   styleUrl: './admin-index.component.scss'
@@ -174,6 +178,8 @@ export class AdminIndexComponent implements AfterViewInit {
           this.chart.destroy();
           this.chart2.destroy();
         }
+
+        this.calculosData();
 
         this.prepareChartData();
         this.prepareDoughnutChartData();
@@ -326,6 +332,10 @@ export class AdminIndexComponent implements AfterViewInit {
         };
       }
     });
+  }
+
+  calculosData(){
+    
   }
 
 

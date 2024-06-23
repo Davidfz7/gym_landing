@@ -1,21 +1,13 @@
-table {
-    width: 100%;
-  }
+
   
   .mat-mdc-form-field {
     font-size: 14px;
     width: 100%;
   }
   
-  td, th {
-    width: 25%;
-  }
+ 
 
-  .tabla{
-    max-width: 80%;
-    margin: 0 auto;
-    margin-bottom: 50px ;
-  }
+
 
   .mat-tab-group {
     margin-bottom: 48px;
@@ -115,4 +107,84 @@ mat-hint{
   border: 2px solid #00cec9;
 }
 
+// desde aqui el nuevo css, revisar todo lo que esta para arriba
 
+.butMenu{
+  margin:0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width:100%;
+  justify-content: left;
+}
+
+.butMenuActive{
+  background-color: #333236;
+}
+
+.butMenuFirst {
+  margin-top: 25px;
+}
+
+.mainDiv{
+  background-color:rgb(27, 27, 27);
+  border-top: 1px solid rgb(139, 139, 139) ;
+  
+  border-bottom-right-radius: 10px;
+}
+
+.divMenu{
+  border-top: 1px solid rgb(139, 139, 139) ;
+  border-right: 1px solid rgb(139, 139, 139) ;
+}
+
+.divTitu{
+  border-right: 1px solid rgb(139, 139, 139) ;
+}
+
+.cartaMain{
+  max-width: 98%;
+  margin: 0 auto;
+  padding: 0px;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 2px;
+  background-color: rgb(34, 33, 37);
+  border-radius: 10px;
+  margin-bottom: 300px;
+}
+
+h6{
+  color: white;
+  margin-top: 5px;
+}
+
+mat-icon{
+  color: white;
+}
+
+.cartas{
+  margin: 10px;
+  margin-top: 25px;
+  background: transparent;
+}
+
+.subtit{
+  color: gray;
+}
+
+h2{color: white;}
+
+.tabla{
+  max-width: 100%;
+  background-color: transparent;
+  margin-top: 5px;
+}
+
+.cartaTabla{
+  margin-top: 25px;
+  background: transparent;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  max-width:100%;
+}

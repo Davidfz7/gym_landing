@@ -29,10 +29,6 @@ export const routes: Routes = [
     { path:'admin', component: AdminLoginComponent},
     { path:'admin/home', component: AdminIndexComponent, canActivate: [authGuard]},
 
-    // {
-    //     path: 'admin/home',
-    //     canActivate: [authGuard],
-    // },
 
     { path:'', redirectTo:'/productos' ,pathMatch:'full'},
     { path:'**',component:PageNotFoundComponent},
