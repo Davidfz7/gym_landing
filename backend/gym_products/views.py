@@ -10,18 +10,13 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.authentication import TokenAuthentication
 #----------------------------------------------
 from .models      import Product, Customer, Sales
-from .serializers import ProductSerializer, CustomerSerializer, SalesSerializer
-from .utils      import  (get_all_sales, add_new_sale, update_sale, 
-                           add_customer, get_all_customers,
-                           update_customer)
 
-from .utils_v2 import *
+from .utils import *
 #----------------------------------------------
 
        
 class ProductView(APIView): 
-    parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    serializer_class = ProductSerializer
+    parser_classes   = (MultiPartParser, FormParser, JSONParser) 
     #permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly]
     #authentication_classes = [TokenAuthentication]
     permission_classes = []
@@ -78,39 +73,73 @@ class ProductView(APIView):
  
 class SaleView(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
+    #authentication_classes = [TokenAuthentication]
+    permission_classes = []
+    authentication_classes = []
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.sale_do:SaleDo = SaleDo()
+
     def get(self, request):
         path = request.path
-        if "/get-all-sales/" == path:
-            print("si entro aqui")
-            all_sales = get_all_sales()
-            return Response(all_sales, status = status.HTTP_200_OK)
-    
+ 
+        if "/all-sales/" == path:
+            rp:Response = self.sale_do.all_sales()
+            return rp
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
+
     def post(self, request):
         path = request.path
-        if "/add-new-sale/" == path: 
-            return add_new_sale(request)
-
-    def patch(self, request, pk = None):
-        try: 
-            sale = Sales.objects.get(pk = pk)
-            return update_sale(request, sale)
-        except Sales.DoesNotExist:
-            return Response({"info": "Sale not found"}, status = status.HTTP_404_NOT_FOUND)
-    def delete(self, request, pk = None):
-        try: 
-            sale = Sales.objects.get(pk = pk)
-            sale.delete()
-            return Response({"info": "Sale deleted"}, status= status.HTTP_200_OK)
-        except Sales.DoesNotExist:
-            return Response({"info": "Sale not found"}, status = status.HTTP_404_NOT_FOUND)
         
+        if "/new-sale/" == path: 
+            rp:Response = self.sale_do.new_sale(request = request)
+            return rp 
+        
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, pk:int = None):
+        path = request.path
+
+        if f"/update-sale/{pk}/" == path:
+            try: 
+                sale = Sales.objects.get(pk = pk)
+                return self.sale_do.update_sale(request, sale)
+            except Sales.DoesNotExist:
+                return Response({"info": "sale not found"}, status = status.HTTP_404_NOT_FOUND)
+
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk:int = None):
+        path = request.path
+
+        if f"/delete-sale/{pk}/" == path:
+            try: 
+                sale = Sales.objects.get(pk = pk)
+                rp:Response = self.sale_do.delete_sale(request = request,
+                                                    instance = sale)
+                return rp
+            except Sales.DoesNotExist:
+                return Response({"error": "sale does not exist"}, 
+                                status = status.HTTP_404_NOT_FOUND)
+        
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
 
 class CustomerView(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    permission_classes = []
+    authentication_classes = []
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.customer_do:CustomerDo = CustomerDo()
 
     def get_object(self, pk): 
         try: 
@@ -120,36 +149,48 @@ class CustomerView(APIView):
    
     def get(self, request, pk = None):
         path = request.path
-        if path == '/get-all-customers/':
-            return get_all_customers()
-        if f"/get-customer/{pk}/" == path: 
-            try: 
-                product = Customer.objects.get(pk = pk)
-                serializer = CustomerSerializer(instance= product)      
-                return Response(serializer.data, status = status.HTTP_200_OK)
-            except Customer.DoesNotExist:
-                return Response({"info":"Customer does not exist"}, status = status.HTTP_404_NOT_FOUND) 
-        return Response("customerview.get()", status = status.HTTP_200_OK)    
-    def patch(self, request, pk = None):
-        try: 
-            product = Customer.objects.get(pk = pk)
-            return update_customer(instance = product,
-                                   request = request) 
-        except Customer.DoesNotExist:
-            return Response({"info":"Customer does not exist"}, status = status.HTTP_404_NOT_FOUND) 
+        
+        if path == '/all-customers/':
+            rp:Response = self.customer_do.all_customers()
+            return rp 
+        
+        if f"/customer/{pk}/" == path: 
+            rp:Response = self.customer_do.customer_id(pk=pk)
+            return rp 
+        
+        return Response({"error": "not a valid endpoint"}, status = status.HTTP_400_BAD_REQUEST)    
     
-    def delete(self, request, pk = None):
-        try: 
-            customer = Customer.objects.get(pk = pk)
-            customer.delete()
-            return Response({"info": "Customer deleted"}, status= status.HTTP_200_OK)
-        except Customer.DoesNotExist:
-            return Response({"info": "Customer not found"}, status = status.HTTP_404_NOT_FOUND) 
-
-class AddCustomerView(APIView):
-    parser_classes   = (MultiPartParser, FormParser, JSONParser)     
     def post(self, request):
         path = request.path
-        if "/add-customer/" == path:
-            return add_customer(request) 
-        return Response("addcustomerview.post()", status = status.HTTP_200_OK)
+        
+        if "/new-customer/" == path:
+            rp:Response = self.customer_do.new_customer(request = request)
+            return rp 
+
+        return Response({"error":"not a valid endpoint"}, 
+                       status = status.HTTP_400_BAD_REQUEST)
+    
+    def patch(self, request, pk:int = None):
+        path = request.path
+
+        if f"/update-customer/{pk}/" == path:
+            try: 
+                customer = Customer.objects.get(pk = pk)
+                rp:Response = self.customer_do.update_customer(instance = customer,
+                                                            request = request)
+                return rp 
+            except Customer.DoesNotExist:
+                return Response({"info":"customer does not exist"}, status = status.HTTP_404_NOT_FOUND) 
+        
+        return Response({"error":"not a valid endpoint"}, 
+                       status = status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk:int = None):
+        path = request.path
+
+        if f"/delete-customer/{pk}/" == path:
+            rp:Response = self.customer_do.delete_customer(pk = pk)
+            return rp
+
+        return Response({"error": "not a valid endpoint"}, 
+                        status = status.HTTP_400_BAD_REQUEST) 
