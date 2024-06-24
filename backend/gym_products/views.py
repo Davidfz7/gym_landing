@@ -8,24 +8,23 @@ from rest_framework.views       import APIView
 from rest_framework.parsers     import FormParser, MultiPartParser, JSONParser 
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 #----------------------------------------------
 from .models      import Product, Customer, Sales
-
 from .utils import *
 #----------------------------------------------
 
        
 class ProductView(APIView): 
     parser_classes   = (MultiPartParser, FormParser, JSONParser) 
-    #permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly]
-    #authentication_classes = [TokenAuthentication]
-    permission_classes = []
-    authentication_classes = []
+    permission_classes = [IsAuthenticated, IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.product_do:ProductDo = ProductDo() 
-    
+        print("I know that im being created but now what?") 
+
     def get_object(self, pk): 
         try: 
             return Product.objects.get(pk = pk)
@@ -73,10 +72,9 @@ class ProductView(APIView):
  
 class SaleView(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    #permission_classes = [IsAuthenticated]
-    #authentication_classes = [TokenAuthentication]
     permission_classes = []
     authentication_classes = []
+
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -132,14 +130,15 @@ class SaleView(APIView):
 
 class CustomerView(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    # permission_classes = [IsAuthenticated]
-    # authentication_classes = [TokenAuthentication]
-    permission_classes = []
-    authentication_classes = []
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    # permission_classes = []
+    # authentication_classes = []
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.customer_do:CustomerDo = CustomerDo()
+        print(self.request.path)
 
     def get_object(self, pk): 
         try: 

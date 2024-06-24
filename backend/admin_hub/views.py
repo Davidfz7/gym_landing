@@ -17,6 +17,8 @@ from .others import send_email, signup, login
 
 class UserView(APIView):
     parser_classes = (MultiPartParser, FormParser, JSONParser)
+    permission_classes = []
+    authentication_classes = []
     def post(self, request):
         path = request.path
         print(path)

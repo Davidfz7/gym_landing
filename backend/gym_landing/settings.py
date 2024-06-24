@@ -45,9 +45,13 @@ INSTALLED_APPS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.IsAuthenticated',   
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
     ]
 }
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,6 +63,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     # 'admin_hub.middleware.TokenExpiryMiddleware'
 ]
+
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'gym_landing.urls'
