@@ -1,3 +1,4 @@
+from typing import Any
 from django.http                  import Http404
 #----------------------------------------------
 from rest_framework.parsers     import JSONParser
@@ -5,98 +6,139 @@ from rest_framework             import status
 from rest_framework.response    import Response
 from rest_framework.views       import APIView
 from rest_framework.parsers     import FormParser, MultiPartParser, JSONParser 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 #----------------------------------------------
 from .models      import Product, Customer, Sales
-from .serializers import ProductSerializer, CustomerSerializer, SalesSerializer
-from .utils      import  (get_all_products,filter_products, 
-                           add_new_product, get_all_sales, add_new_sale,
-                           get_imgs_path, update_sale, update_product,
-                           add_new_images, add_customer, get_all_customers,
-                           update_customer)
+from .utils import *
 #----------------------------------------------
 
        
 class ProductView(APIView): 
-    parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    serializer_class = ProductSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]     
-   
+    parser_classes   = (MultiPartParser, FormParser, JSONParser) 
+    permission_classes = [IsAuthenticated, IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.product_do:ProductDo = ProductDo() 
+        print("I know that im being created but now what?") 
+
     def get_object(self, pk): 
         try: 
             return Product.objects.get(pk = pk)
         except Product.DoesNotExist:
             raise Http404
+
+    def get(self, request, pk:int = None):
+        path = request.path
+
+        if "/all-products/" == path:
+            rp:Response = self.product_do.all_products()
+            return rp
+
+        if f"/product/{pk}/" == path:
+            rp:Response = self.product_do.product_by_id(pk)
+            return rp
+
+        if "/imgs-names/" == path:
+            rp:Response = self.product_do.imgs_path()
+            return rp 
         
     def post(self, request, pk = None):
         path = request.path
-        if "/add-new-product/" == path:
-            return add_new_product(request)
-        if f"/add-new-images/{pk}/" == path:
-            product: Product  = self.get_object(pk)
-            return add_new_images(request, str(product.id))
-         
-    def patch(self, request, pk = None):
-        product:Product = self.get_object(pk) 
-        return update_product(request, product)
 
-class ProductViewNoAuth(APIView):
-    parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    serializer_class = ProductSerializer
-
-    def get(self, request, pk = None):
-        path = request.path
-        if "/get-all-products/" == path:
-            all_products = get_all_products()
-            return Response(all_products, status = status.HTTP_200_OK)
-        if "/get-imgs-names/" == path: 
-            return get_imgs_path() 
-        if pk is not None: 
-            try: 
-                product = Product.objects.get(pk = pk)
-                serializer = ProductSerializer(instance= product)      
-                return Response(serializer.data, status = status.HTTP_200_OK)
-            except Product.DoesNotExist:
-                return Response({"info":"Product does not exist"}, status = status.HTTP_404_NOT_FOUND)
+        if "/new-product/" == path:
+            rp:Response = self.product_do.new_product(request)
+            return rp
         
+        if f"/new-images/{pk}/" == path:
+            product: Product  = self.get_object(pk)
+            rp = self.product_do.new_images(request = request, 
+                                            directory_id = str(product.id))
+            return rp 
+         
+    def patch(self, request, pk:int = None):
+        path = request.path
+
+        if f"/update-product/{pk}/" == path: 
+            product:Product = self.get_object(pk)
+            rp:Response = self.product_do.update_product(request = request,
+                                                        instance = product)
+            return rp
+        return Response({"error": "not valid endpoint"}, 
+                        status = status.HTTP_400_BAD_REQUEST)     
  
 class SaleView(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
+    permission_classes = []
+    authentication_classes = []
+
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.sale_do:SaleDo = SaleDo()
+
     def get(self, request):
         path = request.path
-        if "/get-all-sales/" == path:
-            print("si entro aqui")
-            all_sales = get_all_sales()
-            return Response(all_sales, status = status.HTTP_200_OK)
-    
+ 
+        if "/all-sales/" == path:
+            rp:Response = self.sale_do.all_sales()
+            return rp
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
+
     def post(self, request):
         path = request.path
-        if "/add-new-sale/" == path: 
-            return add_new_sale(request)
-
-    def patch(self, request, pk = None):
-        try: 
-            sale = Sales.objects.get(pk = pk)
-            return update_sale(request, sale)
-        except Sales.DoesNotExist:
-            return Response({"info": "Sale not found"}, status = status.HTTP_404_NOT_FOUND)
-    def delete(self, request, pk = None):
-        try: 
-            sale = Sales.objects.get(pk = pk)
-            sale.delete()
-            return Response({"info": "Sale deleted"}, status= status.HTTP_200_OK)
-        except Sales.DoesNotExist:
-            return Response({"info": "Sale not found"}, status = status.HTTP_404_NOT_FOUND)
         
+        if "/new-sale/" == path: 
+            rp:Response = self.sale_do.new_sale(request = request)
+            return rp 
+        
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, pk:int = None):
+        path = request.path
+
+        if f"/update-sale/{pk}/" == path:
+            try: 
+                sale = Sales.objects.get(pk = pk)
+                return self.sale_do.update_sale(request, sale)
+            except Sales.DoesNotExist:
+                return Response({"info": "sale not found"}, status = status.HTTP_404_NOT_FOUND)
+
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk:int = None):
+        path = request.path
+
+        if f"/delete-sale/{pk}/" == path:
+            try: 
+                sale = Sales.objects.get(pk = pk)
+                rp:Response = self.sale_do.delete_sale(request = request,
+                                                    instance = sale)
+                return rp
+            except Sales.DoesNotExist:
+                return Response({"error": "sale does not exist"}, 
+                                status = status.HTTP_404_NOT_FOUND)
+        
+        return Response({"error": "not a valid endpoint"},
+                        status = status.HTTP_404_NOT_FOUND)
 
 class CustomerView(APIView):
     parser_classes   = (MultiPartParser, FormParser, JSONParser)
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
+    # permission_classes = []
+    # authentication_classes = []
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.customer_do:CustomerDo = CustomerDo()
+        print(self.request.path)
 
     def get_object(self, pk): 
         try: 
@@ -106,36 +148,48 @@ class CustomerView(APIView):
    
     def get(self, request, pk = None):
         path = request.path
-        if path == '/get-all-customers/':
-            return get_all_customers()
-        if f"/get-customer/{pk}/" == path: 
-            try: 
-                product = Customer.objects.get(pk = pk)
-                serializer = CustomerSerializer(instance= product)      
-                return Response(serializer.data, status = status.HTTP_200_OK)
-            except Customer.DoesNotExist:
-                return Response({"info":"Customer does not exist"}, status = status.HTTP_404_NOT_FOUND) 
-        return Response("customerview.get()", status = status.HTTP_200_OK)    
-    def patch(self, request, pk = None):
-        try: 
-            product = Customer.objects.get(pk = pk)
-            return update_customer(instance = product,
-                                   request = request) 
-        except Customer.DoesNotExist:
-            return Response({"info":"Customer does not exist"}, status = status.HTTP_404_NOT_FOUND) 
+        
+        if path == '/all-customers/':
+            rp:Response = self.customer_do.all_customers()
+            return rp 
+        
+        if f"/customer/{pk}/" == path: 
+            rp:Response = self.customer_do.customer_id(pk=pk)
+            return rp 
+        
+        return Response({"error": "not a valid endpoint"}, status = status.HTTP_400_BAD_REQUEST)    
     
-    def delete(self, request, pk = None):
-        try: 
-            customer = Customer.objects.get(pk = pk)
-            customer.delete()
-            return Response({"info": "Customer deleted"}, status= status.HTTP_200_OK)
-        except Customer.DoesNotExist:
-            return Response({"info": "Customer not found"}, status = status.HTTP_404_NOT_FOUND) 
-
-class AddCustomerView(APIView):
-    parser_classes   = (MultiPartParser, FormParser, JSONParser)     
     def post(self, request):
         path = request.path
-        if "/add-customer/" == path:
-            return add_customer(request) 
-        return Response("addcustomerview.post()", status = status.HTTP_200_OK)
+        
+        if "/new-customer/" == path:
+            rp:Response = self.customer_do.new_customer(request = request)
+            return rp 
+
+        return Response({"error":"not a valid endpoint"}, 
+                       status = status.HTTP_400_BAD_REQUEST)
+    
+    def patch(self, request, pk:int = None):
+        path = request.path
+
+        if f"/update-customer/{pk}/" == path:
+            try: 
+                customer = Customer.objects.get(pk = pk)
+                rp:Response = self.customer_do.update_customer(instance = customer,
+                                                            request = request)
+                return rp 
+            except Customer.DoesNotExist:
+                return Response({"info":"customer does not exist"}, status = status.HTTP_404_NOT_FOUND) 
+        
+        return Response({"error":"not a valid endpoint"}, 
+                       status = status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk:int = None):
+        path = request.path
+
+        if f"/delete-customer/{pk}/" == path:
+            rp:Response = self.customer_do.delete_customer(pk = pk)
+            return rp
+
+        return Response({"error": "not a valid endpoint"}, 
+                        status = status.HTTP_400_BAD_REQUEST) 
