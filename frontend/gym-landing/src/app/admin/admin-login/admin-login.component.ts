@@ -53,7 +53,7 @@ export class AdminLoginComponent {
       this.authService.login(email, password).subscribe(response => {
         if (this.authService.isLoggedIn()) {
           console.log('Login successful');
-          this.router.navigate(['/admin/home']);
+          this.router.navigate(['/admin/inicio']);
 
         } else {
           console.log('Login failed');

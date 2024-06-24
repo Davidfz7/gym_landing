@@ -1,0 +1,148 @@
+.butMenu{
+    margin:0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width:100%;
+    justify-content: left;
+  }
+  
+  .butMenuActive{
+    background-color: #333236;
+  }
+  
+  .butMenuFirst {
+    margin-top: 25px;
+  }
+  
+  .mainDiv{
+    background-color:rgb(27, 27, 27);
+    border-top: 1px solid rgb(139, 139, 139) ;
+    
+    border-bottom-right-radius: 10px;
+  }
+  
+  .divMenu{
+    border-top: 1px solid rgb(139, 139, 139) ;
+    border-right: 1px solid rgb(139, 139, 139) ;
+  }
+  
+  .divTitu{
+    border-right: 1px solid rgb(139, 139, 139) ;
+  }
+  
+  .cartaMain{
+    max-width: 98%;
+    margin: 0 auto;
+    padding: 0px;
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-top: 2px;
+    background-color: rgb(34, 33, 37);
+    border-radius: 10px;
+    margin-bottom: 300px;
+  }
+  
+  h5{
+    color: white;
+  }
+
+  h4{
+    margin-bottom: 0px;
+  }
+  
+  mat-icon{
+    color: white;
+  }
+  
+  .cartas{
+    margin: 10px;
+    margin-top: 25px;
+    background: transparent;
+  }
+  
+  .subtit{
+    color: gray;
+  }
+  
+  h1{color: white;}
+  
+  .tabla{
+    max-width: 100%;
+    background-color: transparent;
+
+  }
+  
+  .cartaTabla{
+    margin-top: 25px;
+    background: transparent;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    max-width:100%;
+  }
+
+  mat-form-field{
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  mat-paginator{
+    background-color: transparent;
+  }
+
+  mat-hint{
+    color: white;
+  }
+  
+  .inputsForm{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  #file-input {
+    display: none;
+  }
+  
+  #file-input-label {
+    // border: 2px solid #6c5ce7;
+    // padding: .2em .4em;
+    // border-radius: .2em;
+    // background-color: #e5b80b;
+    // transition: 1s;
+    cursor: pointer;
+
+    // padding: 0 6px 0 6px;
+    // margin: 6px 8px 6px 8px;
+    // min-width: 88px;
+    // border-radius: 3px;
+    // font-size: 14px;
+    // text-align: center;
+    // text-transform: uppercase;
+    // text-decoration:none;
+    // border: none;
+    // outline: none;
+  }
+  
+//   #file-input-label:hover {
+//     background-color: #81ecec;
+//     border: 2px solid #00cec9;
+//   }
+
+  h4{
+    font-weight: 400;
+    color: white;
+  }
+
+  .imagen {
+    display: flex;
+    flex-wrap: wrap; /* Optional: Allows wrapping to the next line if there are too many images to fit in one line */
+}
+
+.imagenes {
+    margin: 5px; /* Optional: Adds some space between the images */
+}
+  .imagenes img{
+    max-width: 200px;
+    max-height: 200px;
+  }
+  

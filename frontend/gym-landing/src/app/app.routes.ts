@@ -12,6 +12,9 @@ import { ProductoEquiposComponent } from './producto/producto-equipos/producto-e
 import { ProductoMaquinasComponent } from './producto/producto-maquinas/producto-maquinas.component';
 import { ProductoDetailComponent } from './producto/producto-detail/producto-detail.component';
 import { ProductoHomeComponent } from './producto/producto-home/producto-home.component';
+import { AdminProductoComponent } from './admin/admin-producto/admin-producto.component';
+import { AdminCostumerComponent } from './admin/admin-costumer/admin-costumer.component';
+import { AdminSalesComponent } from './admin/admin-sales/admin-sales.component';
 
 export const routes: Routes = [
     { path:'productos', component: ProductoIndexComponent},
@@ -27,7 +30,11 @@ export const routes: Routes = [
     { path:'avisos', component: AvisosIndexComponent},
 
     { path:'admin', component: AdminLoginComponent},
-    { path:'admin/home', component: AdminIndexComponent, canActivate: [authGuard]},
+    { path:'admin/inicio', component: AdminIndexComponent, canActivate: [authGuard]},
+
+    { path:'admin/productos', component: AdminProductoComponent},
+    { path:'admin/compradores', component: AdminCostumerComponent},
+    { path:'admin/ventas', component: AdminSalesComponent},
 
 
     { path:'', redirectTo:'/productos' ,pathMatch:'full'},

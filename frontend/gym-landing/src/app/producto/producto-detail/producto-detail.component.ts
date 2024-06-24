@@ -8,18 +8,11 @@ import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import {
-  CarouselComponent,
-  CarouselControlComponent,
-  CarouselIndicatorsComponent,
-  CarouselInnerComponent,
-  CarouselItemComponent,
-  ThemeDirective
-} from '@coreui/angular';
+
 import { NgFor } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AlertModule } from '@coreui/angular';
-import { environment } from '../../environments/environment';
+
+import { environment } from '../../../environments/environment';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
@@ -29,8 +22,8 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-producto-detail',
   standalone: true,
-  imports: [MatCardModule, CommonModule, ThemeDirective, CarouselComponent, CarouselIndicatorsComponent, 
-    CarouselInnerComponent, NgFor, CarouselItemComponent, CarouselControlComponent, RouterLink, AlertModule,MatButtonModule,
+  imports: [MatCardModule, CommonModule,    
+     NgFor,   RouterLink, MatButtonModule,
     MatDividerModule, MatIconModule],
   providers: [
     provideAnimations()],
