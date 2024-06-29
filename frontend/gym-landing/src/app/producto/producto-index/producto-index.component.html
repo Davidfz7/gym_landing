@@ -1,127 +1,130 @@
 <div class="all">
-
-    <div class="imgContainer">
-        <img class="imgGym" src="assets/gym.jpg" alt="">
-    </div>
-    <div class="navSubC">
-        <div class="nsS">
-            <h4>Catalogo / Productos</h4>
-        </div>
-        <div class="nsS">
-            <button mat-button [matMenuTriggerFor]="navMenu">Filtrar por: Mas Nuevos <mat-icon>expand_more</mat-icon></button>
-            <mat-menu #navMenu="matMenu">
-            <button mat-menu-item [routerLink]="'/avisos'">
-                <mat-icon>room_preferences</mat-icon>
-                <span>Maquinas</span>
-            </button>
-            <button mat-menu-item [routerLink]="'/encuestas'">
-                <mat-icon>fitness_center</mat-icon>
-                <span>Pesas</span>
-            </button>
-            </mat-menu>
-        </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         
-    </div>
-    
-    <div class="container">
-        <div class="sidebar child">
-          <!-- <mat-form-field class="example-form-field buscar" appearance="outline" style="margin-top: 16px;">
-            <mat-label>Buscar Productos</mat-label>
-            <input matInput type="text" [(ngModel)]="searchValue" (ngModelChange)="onSearchChange()">
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''; onSearchChange()">
-            <input matInput type="text" [(ngModel)]="searchValue">
-            <button matSuffix mat-icon-button aria-label="Clear">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field> -->
-
-          <mat-form-field class="example-form-field buscar" appearance="outline" style="margin-top: 16px;"> 
-            <!-- Quitar el appearance="outline"  -->
-            <mat-label>Buscar Productos</mat-label>
-            <input matInput type="text" [(ngModel)]="value">
-            @if (value) {
-              <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-                <mat-icon>close</mat-icon>
-              </button>
-            }
-          </mat-form-field>
-              <mat-divider></mat-divider>
-              <br>
-    
-              
-              <!-- <mat-card class="cartasFiltro">
-                <mat-card-content>
-                  <h3 class="example-h2">Rango de Precios</h3>
-                  <div class="example-label-container">
-                    <label id="example-name-label" class="example-name-label">Minimo:</label>
-                    <label class="example-value-label">{{slider.value}}</label>
-                    <label id="example-name-label" class="example-name-label">Maximo:</label>
-                    <label class="example-value-label">{{slider2.value}}</label>
-                  </div>
-                  <mat-slider min="0" max="5000000" [(ngModel)]="min" (ngModelChange)="onPriceChange()" thumbLabel>
-                  </mat-slider>
-                  <mat-slider min="0" max="5000000" [(ngModel)]="max" (ngModelChange)="onPriceChange()" thumbLabel>
-                  </mat-slider>
-    
-                </mat-card-content>
-              </mat-card> -->
-
-              <mat-card class="cartasFiltro">
-                <mat-card-content>
-                  <h3 class="example-h2">Rango de Precios</h3>
-                  <div class="example-label-container">
-                    <label id="example-name-label" class="example-name-label">Minimo:</label>
-                    <label class="example-value-label">{{slider.value}}</label>
-                    <label id="example-name-label" class="example-name-label">Maximo:</label>
-                    <label class="example-value-label">{{slider2.value}}</label>
-                  </div>
-                  <mat-slider min="0" max="5000000" [step]="step" [discrete]="thumbLabel">  
-                    <input [(ngModel)]="min" #slider matSliderStartThumb>
-                    <input [(ngModel)]="max" #slider2 matSliderEndThumb>
-                  </mat-slider>
-                </mat-card-content>
-              </mat-card>
-
-              <br>
-              <mat-divider></mat-divider>
-              <br>
-              <mat-card class="cartasFiltro">
-                <mat-card-content>
-                    <h3 class="example-h2">Tipos</h3>
-                    <p><mat-checkbox >Opcion 1 </mat-checkbox></p>
-                    <p><mat-checkbox >Opcion 2</mat-checkbox></p>
-                    <p><mat-checkbox >Opcion 3</mat-checkbox></p>
-                </mat-card-content>
-              </mat-card>
-              <br>
-              <mat-divider></mat-divider>
-              <br>
-              <mat-card class="cartasFiltro">
-                <mat-card-content>
-                    <h3 class="example-h2">Marcas</h3>
-                    <p><mat-checkbox >Opcion 1 </mat-checkbox></p>
-                    <p><mat-checkbox >Opcion 2</mat-checkbox></p>
-                    <p><mat-checkbox >Opcion 3</mat-checkbox></p>
-                </mat-card-content>
-              </mat-card>
-              <br>
-              <mat-divider></mat-divider>
-              <br>
-              <mat-card class="cartasFiltro">
-                <mat-card-content>
-                    <h3 class="example-h2">Pesos</h3>
-                    <p><mat-checkbox >Opcion 1 </mat-checkbox></p>
-                    <p><mat-checkbox >Opcion 2</mat-checkbox></p>
-                    <p><mat-checkbox >Opcion 3</mat-checkbox></p>
-                </mat-card-content>
-              </mat-card>
-    
-              
-    
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div style="min-height: 100px;"></div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>OFERTAS DISPONIBLES</h5>
+              <p>Consulte ahora mismo acerca de todas nuestras ofertas</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div style="min-height: 100px;"></div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>NUEVOS INGRESOS</h5>
+              <p>Ordene el catalogo por Mas Recientes para ver los nuevos productos</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div style="min-height: 100px;"></div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>DESCUENTOS</h5>
+              <p>Reciba descuentos especiales al pagar el efectivo</p>
+            </div>
+          </div>
         </div>
-        <div class="main child">
-          <div class="container">
-            <div class="row">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-sm-10">
+      <span ><h1>Todos Los Productos</h1></span>
+    </div>
+    <div class="col-sm-2">
+      <button mat-button (click)="hideFilters()"> Ocultar Filtros <mat-icon>tune</mat-icon></button>
+      <button mat-button (click)="ordernarPor()"> Ordernar Por<mat-icon>keyboard_arrow_down</mat-icon></button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <mat-divider></mat-divider>
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+              Precio
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <mat-checkbox>0-100000</mat-checkbox>
+              <br>
+              <mat-checkbox>100000-1000000</mat-checkbox>
+              <br>
+              <mat-checkbox>1000000-2000000</mat-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+              Marca
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <mat-checkbox>Marca 1</mat-checkbox>
+              <br>
+              <mat-checkbox>Marca 2</mat-checkbox>
+              <br>
+              <mat-checkbox>Marca 3</mat-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+              Sexo
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <mat-checkbox>Si, porfavor</mat-checkbox>
+              <br>
+              <mat-checkbox>No, gracias</mat-checkbox>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-10">
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col-sm-4" *ngFor="let product of datosComb">
+          <div class="card mb-4 click" (click)="viewProduct(product.id)">
+            <img *ngIf="product.imgUrl" [src]="product.imgUrl" class="card-img-top" [alt]="product.pname">
+            <div class="card-body cartasProd">
+              <h3 class="card-title">{{ product.pname }} | ₡{{ product.pprice }}</h3>
+              <h5 class="card-subtitle mb-2">{{ product.pcategory }}</h5>
+              <!-- <button mat-button  (click)="viewProduct(product.id)">Ver Más</button> -->
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+
+  
+    
+
+        
+
+            <!-- <div class="row">
               <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let product of datosComb">
                 <div class="card mb-4">
                   <img *ngIf="product.imgUrl" [src]="product.imgUrl" class="card-img-top" [alt]="product.pname">
@@ -132,32 +135,10 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          
-            
-            <!-- <mat-grid-list [cols]="4" rowHeight="450px" gutterSize="1px">
+            </div> -->
 
-              <mat-grid-tile *ngFor="let product of datosComb">
-                <div>
-                  <div class="cartasProd">
-                    <img mat-card-image *ngIf="product.imgUrl" [src]="product.imgUrl" alt="{{ product.pname }}">
-                  </div>
-                  <mat-card-content>
-                  
-                  </mat-card-content>
-                  <mat-card-header>
-                    <mat-card-title>{{ product.pname }} | ₡{{ product.pprice }}</mat-card-title>
-                    <mat-card-subtitle>{{ product.pcategory }}</mat-card-subtitle>
-                  </mat-card-header>
-                  <mat-card-actions>
-                    <button mat-stroked-button color="primary" class="btnVer" (click)="viewProduct(product.id)">Ver Mas</button>
-                  </mat-card-actions>
-                </div>
-              </mat-grid-tile>
-            </mat-grid-list> -->
-        </div>
-    </div>
+          
+        
 
 </div>
 

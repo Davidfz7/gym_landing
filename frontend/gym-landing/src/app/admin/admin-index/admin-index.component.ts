@@ -151,7 +151,7 @@ export class AdminIndexComponent implements AfterViewInit {
   }
 
   listaProductos(){
-    this.gService.list('get-all-products/')
+    this.gService.list('all-products/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         this.datos=data;
@@ -164,7 +164,7 @@ export class AdminIndexComponent implements AfterViewInit {
   }
 
   listaSales(){
-    this.gService.list('get-all-sales/')
+    this.gService.list('all-sales/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         this.datosSales=data;

@@ -1,42 +1,109 @@
-<mat-toolbar class="mainToolbar">
-    <img class="imgLogo" src="assets/logo.png" alt="logo">
-    <span class="titulo">&nbsp; GStrength</span>
-    <span class="example-spacer"></span>
-    <div class="menuNav">
-        <button mat-button [matMenuTriggerFor]="navMenu">Productos</button>
-        <mat-menu #navMenu="matMenu">
-            <button mat-menu-item [routerLink]="'/productos'">
-                <mat-icon>fitness_center</mat-icon>
-                <span>Todos los Productos</span>
-            </button>
-        </mat-menu>
-        <button mat-button [matMenuTriggerFor]="navMenu2">Pesas</button>
-        <mat-menu #navMenu2="matMenu">
-            <button mat-menu-item [routerLink]="'/productos/pesas'">
-                <mat-icon>fitness_center</mat-icon>
-                <span>Pesos Libres</span>
-            </button>
-        </mat-menu>
-        <button mat-button [matMenuTriggerFor]="navMenu3">Maquinas</button>
-        <mat-menu #navMenu3="matMenu">
-            <button mat-menu-item [routerLink]="'/productos/maquinas'">
-                <mat-icon>room_preferences</mat-icon>
-                <span>Maquinas de Smith</span>
-            </button>
-        </mat-menu>
-        <button mat-button [matMenuTriggerFor]="navMenu4">Equipos</button>
-        <mat-menu #navMenu4="matMenu">
-            <button mat-menu-item [routerLink]="'/productos/equipos'">
-                <mat-icon>sports_gymnastics</mat-icon>
-                <span>Cardiovasculares</span>
-            </button>
-        </mat-menu>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid"> 
+        <span class="titulo navbar-brand">
+            <img class="imgLogo d-inline-block align-text-top" src="assets/logo.png" alt="logo">
+            &nbsp; GStrength
+        </span>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <!-- <div class="menuNav"> -->
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <button mat-button [matMenuTriggerFor]="navMenu">Productos</button>
+                    <mat-menu #navMenu="matMenu">
+                        <button mat-menu-item [routerLink]="'/productos'">
+                            <mat-icon>fitness_center</mat-icon>
+                            <span>Todos los Productos</span>
+                        </button>
+                    </mat-menu>
+                </li>
+                <li class="nav-item">
+                    <button mat-button [matMenuTriggerFor]="navMenu2">Pesas</button>
+                    <mat-menu #navMenu2="matMenu">
+                        <button mat-menu-item [routerLink]="'/productos/pesas'">
+                            <mat-icon>fitness_center</mat-icon>
+                            <span>Pesos Libres</span>
+                        </button>
+                    </mat-menu>
+                </li>
+                <li class="nav-item">
+                    <button mat-button [matMenuTriggerFor]="navMenu3">Maquinas</button>
+                    <mat-menu #navMenu3="matMenu">
+                        <button mat-menu-item [routerLink]="'/productos/maquinas'">
+                            <mat-icon>room_preferences</mat-icon>
+                            <span>Maquinas de Smith</span>
+                        </button>
+                    </mat-menu>
+                </li>
+                <li class="nav-item">
+                    <button mat-button [matMenuTriggerFor]="navMenu4">Equipos</button>
+                    <mat-menu #navMenu4="matMenu">
+                        <button mat-menu-item [routerLink]="'/productos/equipos'">
+                            <mat-icon>sports_gymnastics</mat-icon>
+                            <span>Cardiovasculares</span>
+                        </button>
+                    </mat-menu>
+                </li>
+            </ul>
+        <!-- </div> -->
+        <div class="justify-content-evenly">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                    <mat-icon>info</mat-icon>
+                  </button>
+                  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                    <mat-icon>share</mat-icon>
+                  </button>
+              </form>
+           
+            
+              
+        </div>
+        
+      </div>
     </div>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>info</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-</mat-toolbar>
-  
+  </nav>
+<!-- 
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <span class="titulo navbar-brand">
+            <img class="imgLogo d-inline-block align-text-top" src="assets/logo.png" alt="logo">
+            &nbsp; GStrength
+        </span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pesas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Maquinas</a>
+          </li>
+
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav> -->
+
+
+

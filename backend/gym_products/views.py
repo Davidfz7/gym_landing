@@ -17,7 +17,7 @@ from .utils import *
        
 class ProductView(APIView): 
     parser_classes   = (MultiPartParser, FormParser, JSONParser) 
-    permission_classes = [IsAuthenticated, IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
     def __init__(self, **kwargs: Any) -> None:

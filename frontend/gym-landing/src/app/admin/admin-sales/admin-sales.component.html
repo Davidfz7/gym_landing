@@ -1,1 +1,116 @@
-<p>admin-sales works!</p>
+<div class="cartaMain">
+    <div class="row">
+      <div class="col-sm-2 d-flex align-items-center divTitu">
+        <mat-icon class="me-2">home</mat-icon>
+        <h3 class="mb-0">GStrength Admin</h3>
+      </div>
+      <div class="col-sm-10 d-flex align-items-center">
+        <h3 class="mb-0">Dashboard</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 divMenu">
+        <button class="butMenu  butMenuFirst" mat-button [routerLink]="'/admin/inicio'">
+          <mat-icon>analytics</mat-icon>
+          <span>Dashboard</span>
+        </button>
+        <br>
+          <button class="butMenu" mat-button [routerLink]="'/admin/productos'">
+            <mat-icon>inventory</mat-icon>
+            <span>Productos</span>
+          </button>
+        <br>
+          <button class="butMenu" mat-button [routerLink]="'/admin/compradores'">
+            <mat-icon>group</mat-icon>
+            <span>Compradores</span>
+          </button>
+        <br>
+          <button class="butMenu butMenuActive" mat-button [routerLink]="'/admin/ventas'">
+            <mat-icon>sell</mat-icon>
+            <span>Ventas</span>
+          </button>
+        <br>
+          <button  class="butMenu" mat-button [routerLink]="'/admin/analytics'">
+            <mat-icon>bar_chart</mat-icon>
+            <span>Analiticas</span>
+          </button>
+      </div>
+      <div class="col-sm-10 mainDiv">
+        <div class="row">
+          <div class="col-sm">
+            <mat-card appearance="outlined" class="cartaTabla">
+              
+              <mat-card-content>
+                <h1> Registrar Venta</h1>
+                <form [formGroup]="myForm2" (ngSubmit)="onSubmitVenta()" class="divForm">
+                  <mat-form-field appearance="outline" class="inputsForm">
+                    <mat-label>Producto</mat-label>
+                    <mat-select formControlName="product" placeholder="Producto">
+                      <mat-option *ngFor="let product of dataProds" [value]="product.id">
+                        {{ product.pname }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint>Seleccione el Producto que se ha Vendido</mat-hint>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="inputsForm">
+                    <mat-label>Cantidad</mat-label>
+                    <input matInput formControlName="cantidad" type="number" min="1" placeholder="1">
+                    <mat-hint>Cantidad Vendida del Producto</mat-hint>
+                  </mat-form-field>
+        
+                <button mat-flat-button color="primary" type="submit" [disabled]="!myForm2.valid">Registrar Venta</button>
+              </form>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          
+          
+        </div>
+        
+        <div class="row">
+          <div class="col-sm-12">
+            <mat-card appearance="outlined" class="cartaTabla">
+              <mat-card-content>
+                <h1>Todas las Ventas</h1>
+                <div>
+                <!-- <div class="mat-elevation-z8"> -->
+                    <mat-form-field class="buscar">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. 2024" #input>
+                     </mat-form-field>
+                     <table class="tabla" mat-table [dataSource]="dataSource3" matSort>
+  
+                      <ng-container matColumnDef="productid">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                        <td mat-cell *matCellDef="let row"> {{row.productid}} </td>
+                      </ng-container>
+        
+                      <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad Vendida </th>
+                        <td mat-cell *matCellDef="let row"> {{row.quantity}} </td>
+                      </ng-container>
+        
+                      <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                        <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+                      </ng-container>        
+        
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+        
+                    </table>
+                  <mat-paginator showFirstLastButtons [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleccione una Pagina"></mat-paginator>
+            
+                </div>  
+              </mat-card-content>
+            </mat-card>
+          </div>
+          
+          
+        </div>
+        
+      </div>
+    </div>
+  
+  </div>
+  

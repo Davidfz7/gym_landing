@@ -51,7 +51,7 @@ export class ProductoHomeComponent  {
     private httpClient:HttpClient,
     private sanitizer: DomSanitizer
     ){
-      this.listaProductos();
+      // this.listaProductos();
       
     }
 

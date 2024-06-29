@@ -65,7 +65,7 @@ export class ProductoIndexComponent {
   }
 
   listaProductos(){
-    this.gService.list('get-all-products/')
+    this.gService.list('all-products/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         this.datos=data;
@@ -77,6 +77,14 @@ export class ProductoIndexComponent {
 
   viewProduct(productId: number) {
     this.router.navigate(['/product', productId]);
+  }
+
+  hideFilters(){
+    console.log("hola")
+  }
+
+  ordernarPor(){
+    console.log("hola2")
   }
 
   // onSearchChange(): void {
@@ -100,7 +108,7 @@ export class ProductoIndexComponent {
   // }
 
   listaImagenes(){
-    this.gService.list('get-imgs-names/')
+    this.gService.list('imgs-names/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         this.datosImgs=data;
@@ -121,5 +129,8 @@ export class ProductoIndexComponent {
         console.log(this.datosComb);
       });
   }
+
+
+  
 
 }

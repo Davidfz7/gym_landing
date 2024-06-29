@@ -1,155 +1,41 @@
-.example-card {
-    max-width: 400px;
-    // box-shadow: 3px 3px white ;
-}
-  
-
-.container{
-    display: flex;
+#carouselExampleCaptions{
+  height: 60px;
 }
 
-.child{
-    flex: 1;
-  margin: 10px;
+h3, h4, h5, p, span{
+  color: white;
+  color: white;
 }
 
-.child:first-child {
-    margin-right: 10px;
-    max-width: 20%;
+.row{
+  margin:10px;
+}  
+
+
+.carousel-item img{
+  max-height: 100px;
+  
 }
 
-.example-form-field {
-    width: 378px;
+.click{
+  cursor: pointer;
 }
 
-.example-h2 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  
-  .example-section {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
-  }
-  
-  .example-margin {
-    margin: 8px;
-  }
-  
-  .example-width {
-    max-width: 180px;
-    width: 100%;
-  }
-  
-  .mat-mdc-slider {
-    max-width: 300px;
-    width: 100%;
-  }
-  
-  .mat-mdc-card + .mat-mdc-card {
-    margin-top: 8px;
-  }
-  
-  .example-result-card h2 {
-    margin: 0 8px;
-  }
-  
-  .example-label-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 10px 0;
-    max-width: 284px;
-    color: whtie;
-  }
-  
-  .example-result-card .example-value-label {
-    font-weight: 600;
-  }
-
-  .example-name-label{
-    color: white;
-  }
-
-  .example-value-label{
-    color: white;
-  }
-
-  .mat-mdc-card-title{
-    color: white;
-  }
-
-  .mat-card-image{
-    max-width:150px ;
-    max-height: 150px;
-  }
-
-  .imgContainer{
-    width: 1842px;
-    height: 300px; /* Set the desired height */
-    overflow: hidden; /* Hide the overflow */
-    padding-left: 10px;
-    // padding-right: 43px;
-    padding-top: 16px;
-  }
-
-  .imgGym {
-    width: 1759px; /* Set the width to fill the container */
-    height: auto; /* Allow the height to adjust proportionally */
-  }
-
-  h4{
-    color: white;
-    padding: 6px;
-  }
-
-  .navSubC{
-    width: 1759px;
-    // padding-left: 43px;
-    // padding-right: 43px;
-    padding-top: 16px;
-    display: flex;
-}
-
-.nsS{
-    flex: 1;
-    margin: 10px;
-    
-}
-
-.nsS:first-child {
-    margin-right: 870px;
-    // max-width: 1300px;
-    padding-left: 400px;
-}
- 
-.cartasFiltro{
+.card{
+  border-radius: 0px;
   background-color: transparent;
 }
 
-.cartasProd{
+.card img{
+  height: 450px;
+}
+
+.accordion, .accordion-button, .accordion-body, .accordion-item, .accordion-header, .collapse{
   background-color: transparent;
-  border-radius: 3px;
+  color: white;
 }
 
-.cartasProd img{
-  max-height: 300px;
-}
+$accordion-icon-color:   white;
 
-.btnVer{
-  margin-right: 83px;
-}
 
-.btnConsultar{
-  padding-left: 10px;
-}
 
-.buscar{
-  padding-top: 0;
-}
-
-.all{
-  padding: 50px;
-}
-  

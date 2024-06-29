@@ -1,16 +1,16 @@
-*{
-    margin: 0;
-    padding: 0;
-}
+// *{
+//     margin: 0;
+//     padding: 0;
+// }
 
-.example-spacer {
-    flex: 1 1 auto;
-}
+// .example-spacer {
+//     flex: 1 1 auto;
+// }
 
 .mainToolbar{
     margin: 0px;
     padding: 0px;
-    background-color: transparent;
+    // background-color: transparent;
 }
 
 .imgLogo{
@@ -30,3 +30,21 @@ span{
     font-family: 'Bebas Neue';
 }
 
+
+.navbar{
+    height:60px;
+}
+
+mat-icon{
+    color: white;
+}
+
+// @media (max-width: 768px) {
+//     .navbar-collapse {
+//       background: black;
+//     }
+//   }
+
+// .navbar-collapse{
+//     background-color: black;
+// }
