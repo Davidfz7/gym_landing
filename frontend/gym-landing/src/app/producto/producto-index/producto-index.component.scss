@@ -2,7 +2,7 @@
   height: 60px;
 }
 
-h3, h4, h5, p, span{
+h1, h3, h4, h5, p, span{
   color: white;
   color: white;
 }
@@ -27,7 +27,8 @@ h3, h4, h5, p, span{
 }
 
 .card img{
-  height: 450px;
+
+  max-height: 450px;
 }
 
 .accordion, .accordion-button, .accordion-body, .accordion-item, .accordion-header, .collapse{
@@ -37,5 +38,32 @@ h3, h4, h5, p, span{
 
 $accordion-icon-color:   white;
 
+.content-container-center {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  text-align: end;
+}
+
+.todos{
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 576px) {
+  .content-container-center {
+
+    justify-content: center;
+
+  }
+
+  .navbar{
+    background-color: #2b3035;
+  }
+  
+  .todos{
+    justify-content: center;
+  }
+}
 
 

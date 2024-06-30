@@ -10,7 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authReq = req.clone({
     setHeaders: {
       // Authorization: `Bearer ${authToken}`
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5NzA3OTI0LCJpYXQiOjE3MTk3MDA3MjQsImp0aSI6ImE1ZjY5Yzk0MzA1NTRmOTc4ZTY1ZmE3Y2EzMTcyY2YwIiwidXNlcl9pZCI6M30.CKMgN87ZCIS6xvYADD9qBpfOI_jVCciOHCURDrQCAMU`
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5NzQwMzEyLCJpYXQiOjE3MTk3MzMxMTIsImp0aSI6IjE0ZjExZjM5ZTZjNTRlNDhhOWEwYjc0MjlhYzRlYjJkIiwidXNlcl9pZCI6M30.lVpruWZHAIAxNuiPem5l9wsr50L7vbVeiDCWAW4wc2Q`
       // Authorization: `Token ${authToken}`      
     }
   });

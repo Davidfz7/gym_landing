@@ -263,7 +263,9 @@ $app-theme: mat.m2-define-dark-theme(
 }
 html, body { height: 100%; }
 body{
-    background-color: #262729;
+    margin-top: 80px;
+    // background-color: #262729;
+    background-color: #181a1b;
 }
 
 h3{

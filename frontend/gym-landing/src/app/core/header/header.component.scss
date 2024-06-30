@@ -33,18 +33,28 @@ span{
 
 .navbar{
     height:60px;
+    
 }
 
 mat-icon{
     color: white;
 }
 
-// @media (max-width: 768px) {
-//     .navbar-collapse {
-//       background: black;
-//     }
-//   }
+nav{
+    background-color: #2b3035;
+}
 
-// .navbar-collapse{
-//     background-color: black;
-// }
+
+
+
+
+@media (max-width: 990px) {
+    .navbar{
+        height:80px;
+         
+        
+  
+    }
+    
+  }
+

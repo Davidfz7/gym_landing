@@ -1,16 +1,17 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+
+<nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark">
     <div class="container-fluid"> 
-        <span class="titulo navbar-brand">
-            <img class="imgLogo d-inline-block align-text-top" src="assets/logo.png" alt="logo">
-            &nbsp; GStrength
-        </span>
+        <div class="titulo navbar-brand">
+            <img class="imgLogo d-inline-block" src="assets/logo.png" alt="logo">
+            
+        </div>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <!-- <div class="menuNav"> -->
-            <ul class="navbar-nav mx-auto">
+
+            <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
                     <button mat-button [matMenuTriggerFor]="navMenu">Productos</button>
                     <mat-menu #navMenu="matMenu">
@@ -48,11 +49,11 @@
                     </mat-menu>
                 </li>
             </ul>
-        <!-- </div> -->
-        <div class="justify-content-evenly">
+
+
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                
                 <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
                     <mat-icon>info</mat-icon>
                   </button>
@@ -63,47 +64,12 @@
            
             
               
-        </div>
+       
         
       </div>
     </div>
   </nav>
-<!-- 
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-        <span class="titulo navbar-brand">
-            <img class="imgLogo d-inline-block align-text-top" src="assets/logo.png" alt="logo">
-            &nbsp; GStrength
-        </span>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pesas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Maquinas</a>
-          </li>
 
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav> -->
 
 
 

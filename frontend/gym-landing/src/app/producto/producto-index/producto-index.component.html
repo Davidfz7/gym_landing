@@ -40,16 +40,18 @@
 
   </div>
   <div class="row">
-    <div class="col-sm-10">
-      <span ><h1>Todos Los Productos</h1></span>
+    <!-- <div class="col-sm-6 col-md-7 col-lg-8 col-xl-8 col-xxl-10"> -->
+    <div class="col-sm todos m-0">
+      <h1 class="m-0">Todos Los Productos</h1>
     </div>
-    <div class="col-sm-2">
+    <!-- <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4 col-xxl-2"> -->
+    <div class="content-container-center col-sm">
       <button mat-button (click)="hideFilters()"> Ocultar Filtros <mat-icon>tune</mat-icon></button>
       <button mat-button (click)="ordernarPor()"> Ordernar Por<mat-icon>keyboard_arrow_down</mat-icon></button>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-2">
+    <div class=" col-md-4 col-lg-2">
       <mat-divider></mat-divider>
       
 
@@ -63,11 +65,11 @@
           </h2>
           <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
             <div class="accordion-body">
-              <mat-checkbox>0-100000</mat-checkbox>
+              <mat-checkbox>0-10mil</mat-checkbox>
               <br>
-              <mat-checkbox>100000-1000000</mat-checkbox>
+              <mat-checkbox>10mil-100mil</mat-checkbox>
               <br>
-              <mat-checkbox>1000000-2000000</mat-checkbox>
+              <mat-checkbox>100mil-1millon</mat-checkbox>
             </div>
           </div>
         </div>
@@ -104,10 +106,10 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-10">
+    <div class="col-md-8 col-lg-10">
       <mat-divider></mat-divider>
       <div class="row">
-        <div class="col-sm-4" *ngFor="let product of datosComb">
+        <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let product of datosComb">
           <div class="card mb-4 click" (click)="viewProduct(product.id)">
             <img *ngIf="product.imgUrl" [src]="product.imgUrl" class="card-img-top" [alt]="product.pname">
             <div class="card-body cartasProd">
